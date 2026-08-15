@@ -18,8 +18,12 @@
   /* Mesmos tokens do site principal, pra quem clica daqui pra lá não sentir
      que trocou de empresa no meio do caminho. */
   :root{
-    --paper:#FBFCFB;
-    --cloud:#F3F7F3;
+    /* Fundo um degrau mais escuro que o do site. Cartão branco em cima de
+       papel quase branco não levanta; em cima desse verde acinzentado ele
+       ganha profundidade sem precisar de sombra pesada. */
+    --paper:#E7EDE8;
+    --paper-fundo:#DFE7E1;
+    --cloud:#F1F5F1;
     --ink:#070B2B;
     --slate:#4A577F;
     --slate-soft:#6E7A9C;
@@ -36,7 +40,7 @@
   html{-webkit-text-size-adjust:100%}
   body{
     font-family:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
-    background:var(--paper);color:var(--slate);
+    color:var(--slate);
     font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased;
     min-height:100svh;display:flex;flex-direction:column;
     padding:clamp(28px,7vw,56px) 20px calc(28px + env(safe-area-inset-bottom));
@@ -47,11 +51,32 @@
   :focus-visible{outline:3px solid var(--green-deep);outline-offset:3px;border-radius:12px}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-  /* halo verde no topo, igual ao hero do site */
+  /* Fundo em três camadas: cor base, halo verde no topo e um degradê
+     suave pro pé, pra tela não ficar chapada.
+
+     Vai no html e não no body, de propósito. No body com attachment fixed
+     ele pinta só a altura da janela e sobra branco embaixo quando a página
+     é mais alta que a tela. No html ele cobre o documento inteiro. */
+  html{
+    background:
+      radial-gradient(760px 760px at 50% -300px, rgba(31,219,98,.20), rgba(31,219,98,0) 66%),
+      linear-gradient(180deg, var(--paper) 0%, var(--paper-fundo) 100%) no-repeat;
+    background-size:100% 100%;
+  }
+  /* Grão. Ruído SVG desenhado na hora, sem arquivo e sem requisição. Fica
+     por baixo do conteúdo e não pega clique. */
   body::before{
-    content:"";position:absolute;left:50%;top:-360px;transform:translateX(-50%);
-    width:760px;height:760px;border-radius:50%;pointer-events:none;
-    background:radial-gradient(circle,rgba(31,219,98,.16),rgba(31,219,98,0) 66%);
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    opacity:.055;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+  /* Trama fina de pontos por cima do grão, quase imperceptível. É ela que
+     dá a sensação de papel em vez de tela lisa. */
+  body::after{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    opacity:.4;
+    background-image:radial-gradient(rgba(7,11,43,.055) 1px, transparent 1px);
+    background-size:22px 22px;
   }
 
   .wrap{width:min(440px,100%);margin:0 auto;position:relative;z-index:1;flex:1;
@@ -72,8 +97,9 @@
 
   /* ── pastilhas de prova ───────────────────────────────────────────── */
   .provas{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:20px}
-  .prova{display:inline-flex;align-items:center;gap:7px;background:#fff;
-    border:1px solid var(--line);border-radius:999px;padding:7px 13px;
+  .prova{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.86);
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:7px 13px;
     font-size:12.5px;font-weight:600;color:var(--slate);box-shadow:var(--shadow)}
   .prova svg{width:14px;height:14px;flex:none;stroke:var(--green-deep);fill:none;stroke-width:1.8}
 
