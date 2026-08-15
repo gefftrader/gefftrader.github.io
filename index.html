@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geff Trader IA | Pare de perder clientes por demora no WhatsApp</title>
+<meta name="description" content="A Aly responde seu WhatsApp em segundos, marca na agenda e lança no caixa. Ela entrega mais que respostas: entrega tempo com a família e energia pro que precisa de você.">
+<meta property="og:title" content="Pare de perder clientes por demora no WhatsApp.">
+<meta property="og:description" content="A Aly entrega mais que respostas no WhatsApp: te entrega tempo com a família e energia pra se dedicar às áreas que precisam de você.">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/simbolo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!--FONTES-INLINE-->
+<script>document.documentElement.className+=" js"</script>
+<style>
+  :root{
+    /* neutros */
+    --paper:#FBFCFB;
+    --cloud:#F3F7F3;
+    --ink:#070B2B;
+    --slate:#4A577F;
+    --slate-soft:#6E7A9C;
+    --line:#E4EAE4;
+
+    /* marca */
+    --green:#1FDB62;
+    --green-deep:#0A7F39;
+    --mint:#E7F7EC;
+
+    /* a faisca da marca: mesma forma, cor da casa (o laranja era da Trinks) */
+    --faisca:#12B85A;     --faisca-suave:#CFEFDB;  --creme:#F6FAF6;
+
+    /* semanticas: cada dor tem cor propria, para uma nao virar a outra */
+    --bordo:#8C1D3F;      --bordo-bg:#FCEEF2;   --bordo-line:#F2D6DE;
+    --ambar:#9A5300;      --ambar-bg:#FEF3E4;   --ambar-line:#F5E0C2;
+    --roxo:#553BA6;       --roxo-bg:#EFECFB;    --roxo-line:#DDD6F5;
+    --azul:#4E7BB8;       --azul-bg:#EFF5FC;    --azul-line:#DCE8F7;
+
+    --shadow:0 2px 4px rgba(7,11,43,.04), 0 14px 34px rgba(7,11,43,.07);
+    --shadow-lg:0 4px 8px rgba(7,11,43,.05), 0 26px 60px rgba(7,11,43,.13);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+    background:var(--paper);color:var(--slate);
+    font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;height:auto;display:block}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--azul);outline-offset:3px;border-radius:6px}
+  [hidden]{display:none!important}
+
+  .wrap{width:min(1120px,90vw);margin:0 auto}
+  section{padding:clamp(64px,8vw,104px) 0}
+  .s-cloud{background:var(--cloud)}
+  .s-mint{background:var(--mint)}
+  .s-white{background:#fff;border-block:1px solid var(--line)}
+
+  h1,h2,h3{color:var(--ink);text-wrap:balance;letter-spacing:-.025em;font-weight:700;line-height:1.1}
+  h1{font-size:clamp(33px,4.4vw,52px);line-height:1.08;letter-spacing:-.035em}
+  h2{font-size:clamp(27px,3.4vw,42px)}
+  h3{font-size:19px;line-height:1.32;letter-spacing:-.015em}
+  .thin{font-weight:300}
+  .lead{font-size:clamp(17px,1.7vw,20px);max-width:56ch;color:var(--slate)}
+  .eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:var(--green-deep);margin-bottom:16px}
+  /* pilares do hero: a promessa inteira em quatro pastilhas */
+  .pilares-hero{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+  .ph{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--slate)}
+  .ph svg{width:14px;height:14px;stroke:var(--green-deep)}
+  .ph b{font-weight:inherit}
+  .ph .sm{display:none}
+  @media(max-width:480px){
+    .pilares-hero{gap:6px;margin-bottom:16px}
+    .ph{font-size:11.5px;padding:6px 11px;gap:6px}
+    .ph svg{width:13px;height:13px}
+    .ph.auto{font-size:10.5px}
+    .ph .lg{display:none} .ph .sm{display:inline}
+  }
+  .ph.auto{background:var(--ink);color:#fff;border-color:var(--ink);text-transform:uppercase;letter-spacing:.07em;font-size:11.5px;font-weight:700}
+  .ph.auto svg{stroke:var(--green)}
+  /* a faisca: pontinho que acompanha os titulos */
+  .eyebrow::before{content:"";display:inline-block;width:10px;height:10px;margin-right:8px;background:var(--faisca);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+  .divisor{display:flex;align-items:center;justify-content:center;gap:14px;padding:0 0 clamp(34px,5vw,54px)}
+  .divisor::before,.divisor::after{content:"";height:1px;width:min(64px,16vw);background:var(--faisca-suave)}
+  .divisor i{flex:none;width:12px;height:12px;background:var(--faisca);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+  /* desenho de fundo: linha fina, quase invisivel, so pra tela nao ficar chapada */
+  .traco{position:absolute;top:-40px;right:-70px;width:clamp(300px,38vw,520px);height:auto;pointer-events:none;color:var(--faisca);opacity:.16}
+  .s-mint .traco{top:auto;bottom:-90px;right:auto;left:-90px;transform:scaleX(-1);opacity:.2}
+  .s-mint{position:relative;overflow:hidden}
+  .s-mint .wrap,.s-fin .wrap{position:relative}
+  /* financeiro: a area quente do site */
+  .s-fin{background:var(--creme);border-block:1px solid #E3EFE6;position:relative;overflow:hidden}
+  .grid-fin{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(30px,5vw,64px);align-items:center}
+  .tag-fin{display:inline-block;border:1.5px solid var(--faisca-suave);background:#fff;color:var(--green-deep);border-radius:999px;padding:6px 16px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:18px}
+  .fin-lista{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:13px}
+  .fin-lista li{display:flex;gap:11px;align-items:baseline;font-size:15.5px;color:var(--slate)}
+  .fin-lista li::before{content:"";flex:none;width:11px;height:11px;background:var(--faisca);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);transform:translateY(1px)}
+  .fin-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-lg);padding:26px 28px}
+  .fin-card b{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green-deep);margin-bottom:16px}
+  .fin-linha{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line);font-size:15.5px;color:var(--slate)}
+  .fin-linha strong{font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .fin-linha.ent strong{color:var(--green-deep)}
+  .fin-linha.sai strong{color:var(--bordo)}
+  .fin-total{display:flex;justify-content:space-between;padding-top:15px;font-weight:700;color:var(--ink);font-size:17px}
+  .fin-total strong{font-size:23px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+  .fin-nota{margin-top:14px;font-size:12.5px;color:var(--slate-soft)}
+  .fin-print{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+  /* halo alegre atrás do aparelho: o financeiro é a parte boa da história */
+  .fin-fone{width:100%;max-width:300px;margin:0 auto;justify-self:center;position:relative}
+  .fin-fone::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:150%;aspect-ratio:1;border-radius:50%;z-index:0;
+    background:radial-gradient(circle at 32% 30%,rgba(31,219,98,.34),rgba(31,219,98,0) 58%),
+               radial-gradient(circle at 72% 68%,rgba(255,214,102,.34),rgba(255,214,102,0) 55%),
+               radial-gradient(circle at 60% 20%,rgba(120,220,255,.24),rgba(120,220,255,0) 52%);
+    filter:blur(6px)}
+  .fin-fone .iph,.fin-fone .rot-ap{position:relative;z-index:1}
+  /* tela do Financeiro no aparelho, igualzinha ao app */
+  .fin-demo .fd-periodo{display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:2px}
+  .fin-demo .fd-mes{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:4px 14px;font-size:10.5px;font-weight:600}
+  .fin-demo .fd-seta{width:21px;height:21px;border-radius:50%;border:1px solid var(--bd);background:var(--card);
+    display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--tx2)}
+  .fin-demo .fd-donut{display:flex;justify-content:center;padding:7px 0 9px}
+  .fin-demo .fd-donut span{width:82px;height:82px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .fin-demo .fd-donut i{width:60px;height:60px;border-radius:50%;background:var(--card);display:flex;
+    flex-direction:column;align-items:center;justify-content:center;font-style:normal;gap:1px}
+  .fin-demo .fd-donut b{font-size:11.5px;font-weight:700;letter-spacing:-.02em}
+  .fin-demo .fd-donut em{font-style:normal;font-size:6.5px;letter-spacing:.14em;color:var(--tx2);text-transform:uppercase}
+  .fin-demo .fin-l{display:flex;justify-content:space-between;align-items:center;padding:3.5px 0;font-size:9.5px;color:var(--tx2)}
+  .fin-demo .fin-l u{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px}
+  .fin-demo .fin-l b{color:var(--tx);font-weight:600}
+  .fin-demo .fd-saldo{margin-top:7px;font-size:10px;font-weight:600;color:var(--tx)}
+  @media(max-width:880px){.grid-fin{grid-template-columns:minmax(0,1fr)}.traco{width:280px;right:-100px;opacity:.12}}
+
+  /* revelacao no scroll. Só esconde com o JS vivo, para a pagina nunca
+     ficar em branco se o script falhar ou o robo de busca nao rodar JS. */
+  .js .rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1);transition-delay:var(--d,0s)}
+  .js .rv.on{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;scroll-behavior:auto}
+    .rv{opacity:1;transform:none}
+  }
+
+  header{position:sticky;top:0;z-index:60;background:rgba(251,252,251,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0}
+  .brand{display:flex;align-items:center;gap:13px;min-width:0}
+  .brand img{height:27px;width:auto;flex:none}
+  .brand span{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--slate-soft);border-left:1px solid var(--line);padding-left:13px}
+  @media(max-width:700px){.brand span{display:none}}
+
+  /* Botoes em pilula, peso medio, hover discreto.
+     Dois niveis apenas: verde para a acao principal, contorno para o resto.
+     Nada de bloco escuro chapado, que fechava demais a pagina. */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    background:#fff;color:var(--ink);font-weight:700;font-size:13.5px;
+    text-transform:uppercase;letter-spacing:.06em;
+    text-decoration:none;padding:16px 27px;border-radius:999px;border:0;
+    box-shadow:inset 0 0 0 1.5px #D9E2DB,0 2px 6px rgba(7,11,43,.06);white-space:nowrap;
+    transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+  }
+  .btn svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none}
+  .btn:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1.5px var(--ink),0 10px 20px rgba(7,11,43,.12)}
+  /* ── CTA: vidro menta ──────────────────────────────────────────────────
+     O verde deixa de ser tinta e vira liquido dentro de um vidro. Escolhido
+     pelo Geff entre quatro tratamentos.
+
+     Tres reparos em cima da proposta original, todos medidos:
+     (a) o backdrop-filter e no-op sobre fundo chapado (borrar cor uniforme
+         devolve a mesma cor), entao quem faz o vidro e o gradiente, nao o
+         blur — o blur fica so pra quando o botao cruza borda de secao;
+     (b) sem saturate(): ele deixava o botao MAIS saturado que a faixa em que
+         pousa, o oposto do pedido "menos forte";
+     (c) o aro original dava 1,89:1 contra o papel — o botao sumia do fundo.
+         Engrossado ate o objeto ter fronteira visivel.
+     Texto em #06522A: o --green-deep reprova em AA aqui (4,11:1). */
+  .btn.verde{
+    --vidro-piso:.52;      /* piso branco: sobe = mais legivel, menos vidro */
+    --vidro-luz:0;         /* quanto o vidro pega luz no hover */
+    position:relative; isolation:isolate; overflow:hidden;
+    color:#06522A;
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+    background-color:rgba(255,255,255,calc(var(--vidro-piso) + var(--vidro-luz)));
+    background-image:
+      linear-gradient(180deg,rgba(255,255,255,.60) 0%,rgba(255,255,255,.10) 46%,rgba(255,255,255,0) 100%),
+      linear-gradient(180deg,rgba(31,219,98,.20) 0%,rgba(10,127,57,.26) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.9),
+      inset 0 -1px 0 rgba(6,82,42,.16),
+      0 1px 2px rgba(7,11,43,.06),
+      0 8px 20px rgba(7,11,43,.08),
+      0 4px 14px rgba(10,127,57,.14);
+    transition:transform .22s cubic-bezier(.22,.8,.28,1), box-shadow .22s ease, background-color .22s ease;
+  }
+  /* o aro de 1px: branco no topo, verde-escuro na base — e o que da espessura */
+  .btn.verde::before{
+    content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;
+    padding:1.2px;pointer-events:none;
+    background:linear-gradient(180deg,
+      rgba(255,255,255,.95) 0%, rgba(140,205,170,.55) 40%,
+      rgba(10,127,57,.42) 66%, rgba(6,82,42,.58) 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+            mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+  }
+  /* o realce especular: a lasca de luz no topo do vidro */
+  .btn.verde::after{
+    content:"";position:absolute;z-index:2;pointer-events:none;
+    left:8%;right:8%;top:2px;height:clamp(7px,22%,12px);border-radius:999px;
+    background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,.30) 52%,rgba(255,255,255,0));
+    transition:opacity .22s ease;
+  }
+  .btn.verde:hover{
+    --vidro-luz:.12; transform:translateY(-1.5px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.95),
+      inset 0 -1px 0 rgba(6,82,42,.18),
+      0 1px 2px rgba(7,11,43,.07),
+      0 14px 30px rgba(7,11,43,.11),
+      0 6px 20px rgba(10,127,57,.2);
+  }
+  .btn.verde:active{transform:translateY(0) scale(.988)}
+  .btn.verde:focus-visible{outline:2px solid #06522A;outline-offset:3px}
+  /* se a mascara nao aplicar, o aro viraria um retangulo por cima do texto */
+  @supports not ((-webkit-mask-composite:xor) or (mask-composite:exclude)){
+    .btn.verde::before{display:none}
+    .btn.verde{box-shadow:inset 0 0 0 1.2px rgba(10,127,57,.5),
+      inset 0 1px 0 rgba(255,255,255,.9), 0 8px 20px rgba(7,11,43,.08)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .btn.verde{transition:none} .btn.verde:hover,.btn.verde:active{transform:none}
+  }
+  .btn.sm{padding:11px 20px;font-size:12px}
+  .btn svg{width:18px;height:18px;flex:none}
+
+  /* botao flutuante do WhatsApp: so o icone, sempre por perto, sem gritar */
+  /* o selo da marca vira o atalho do WhatsApp: gira, e o zap fica no canto */
+  .zap{
+    position:fixed;right:20px;bottom:20px;z-index:80;
+    width:72px;height:72px;display:block;
+    filter:drop-shadow(0 6px 18px rgba(7,11,43,.2));
+    transition:transform .2s ease,filter .2s ease;
+  }
+  .zap img{position:absolute;inset:0;width:100%;height:100%}
+  .zap .zap-wa{position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:50%;
+    background:#25D366;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 7px rgba(7,11,43,.28),0 0 0 2.5px var(--paper)}
+  .zap .zap-wa svg{width:15px;height:15px;stroke:#fff;fill:none}
+  .zap:hover{transform:scale(1.07);filter:drop-shadow(0 10px 24px rgba(7,11,43,.26))}
+  @media(max-width:760px){.zap{right:15px;bottom:15px;width:62px;height:62px}.zap .zap-wa{width:25px;height:25px}.zap .zap-wa svg{width:14px;height:14px}}
+
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .micro{font-size:14px;color:var(--slate-soft);margin-top:14px}
+
+  /* hero */
+  .hero{padding:clamp(30px,4vw,52px) 0 clamp(70px,8vw,100px);position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;right:-20%;top:-42%;width:860px;height:860px;border-radius:50%;background:radial-gradient(circle,rgba(31,219,98,.15),rgba(31,219,98,0) 66%);pointer-events:none}
+  .hero .grid{position:relative;z-index:1;display:grid;gap:64px;align-items:center}
+  @media(min-width:1000px){.hero .grid{grid-template-columns:1.04fr .96fr;gap:56px;align-items:start}
+    .hero .grid>div:first-child{padding-top:clamp(16px,3vw,44px)}}
+  .hero h1{margin-bottom:20px}
+  .hero .lead{margin-bottom:28px}
+
+  /* etiquetas em volta da conversa. Ficam acima e abaixo do card, nunca
+     por cima das mensagens: o que a Aly escreve tem que ser legivel. */
+  .palco{display:flex;flex-direction:column;align-items:center;gap:13px}
+  .tags-linha{display:flex;gap:11px;width:100%;max-width:456px}
+  .tag{
+    flex:1;display:flex;align-items:center;gap:9px;
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:10px 13px;box-shadow:var(--shadow);font-size:12.5px;line-height:1.3;
+  }
+  .tag b{display:block;font-size:14px;font-weight:700;letter-spacing:-.01em}
+  .tag i{font-style:normal;font-weight:500}
+  .tag .pt{width:9px;height:9px;border-radius:50%;flex:none}
+  .tag.t1{border-color:var(--roxo-line);background:var(--roxo-bg)}
+  .tag.t1 i,.tag.t1 b{color:var(--roxo)}  .tag.t1 .pt{background:var(--roxo)}
+  .tag.t2{border-color:#BFEFD2;background:var(--mint)}
+  .tag.t2 i,.tag.t2 b{color:var(--green-deep)}  .tag.t2 .pt{background:var(--green)}
+  .tag.t3{border-color:var(--azul-line);background:var(--azul-bg)}
+  .tag.t3 i,.tag.t3 b{color:var(--azul)}  .tag.t3 .pt{background:var(--azul)}
+  .tag.t4{border-color:#BFEFD2;background:var(--mint)}
+  .tag.t4 i,.tag.t4 b{color:var(--green-deep)}  .tag.t4 .pt{background:var(--green)}
+  @media(max-width:400px){
+    .tags-linha{flex-direction:column}
+    .tag{font-size:12px}
+  }
+
+  /* selo em duas camadas: o G parado, so o anel de texto gira */
+  @keyframes gira{to{transform:rotate(360deg)}}
+  .selo{position:relative;display:block;width:110px;height:110px;filter:drop-shadow(0 8px 22px rgba(7,11,43,.16))}
+  .band .wrap{position:relative}
+  .band .selo{position:absolute;right:clamp(20px,5vw,64px);top:50%;transform:translateY(-50%);width:clamp(96px,11vw,138px);height:clamp(96px,11vw,138px)}
+  @media (max-width:860px){.band .selo{display:none}}
+  .selo img{position:absolute;inset:0;width:100%;height:100%}
+  .selo-anel{animation:gira 26s linear infinite}
+
+  /* conversa */
+  .fone{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow-lg);padding:19px;max-width:420px;width:100%;margin:0 auto;position:relative;z-index:2}
+  .fone-topo{display:flex;align-items:center;gap:12px;padding:3px 5px 15px;border-bottom:1px solid var(--line)}
+  .av{width:41px;height:41px;border-radius:50%;background:var(--green);flex:none;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink);font-size:17px}
+  .fone-topo b{display:block;font-size:16px;font-weight:600;color:var(--ink);line-height:1.3}
+  .fone-topo i{font-style:normal;font-size:12.5px;color:var(--green-deep);font-weight:500}
+  .chat{display:flex;flex-direction:column;gap:9px;padding:16px 3px 3px;min-height:392px}
+  .msg{max-width:88%;padding:11px 15px;border-radius:16px;font-size:14.5px;line-height:1.5}
+  .js .msg{opacity:0;transform:translateY(10px) scale(.98);animation:pop .42s cubic-bezier(.2,.8,.3,1) forwards}
+  .msg.deles{background:#F1F3F7;color:var(--ink);align-self:flex-start;border-bottom-left-radius:5px}
+  .msg.dela{background:#D9FDD3;color:#0B1F16;align-self:flex-end;border-bottom-right-radius:5px;font-weight:400}
+  .msg.dela time{opacity:.5}
+  .msg time{display:block;font-size:11px;opacity:.55;margin-top:3px;font-weight:400}
+  @keyframes pop{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.msg{opacity:1;transform:none}}
+
+  /* painel: recriacao do app com numeros de exemplo */
+  .painel-grid{display:grid;gap:48px;align-items:center}
+  @media(min-width:980px){.painel-grid{grid-template-columns:.92fr 1.08fr;gap:56px}}
+  .fone-app{
+    width:100%;max-width:362px;margin:0 auto;background:#fff;
+    border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow-lg);
+    overflow:hidden;
+  }
+  .app-topo{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:15px 18px;border-bottom:1px solid var(--line);background:var(--paper);
+  }
+  .app-topo b{font-size:16px;color:var(--ink);font-weight:600}
+  .app-topo span{font-size:11px;color:var(--slate-soft);letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+  .app-corpo{padding:15px;display:flex;flex-direction:column;gap:11px;background:var(--cloud)}
+  .ac{background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px 15px}
+  .ac-rot{font-size:11.5px;color:var(--slate-soft);font-weight:500;margin-bottom:3px}
+  .ac-num{font-size:25px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1.1;font-variant-numeric:tabular-nums}
+  .ac-num.verde{color:var(--green-deep)}
+  .app-status{display:flex;align-items:center;gap:9px;background:var(--mint);border:1px solid #BFEFD2;border-radius:15px;padding:12px 14px}
+  .app-status .pulso{width:9px;height:9px;border-radius:50%;background:var(--green);flex:none;box-shadow:0 0 0 4px rgba(31,219,98,.22)}
+  .app-status b{display:block;font-size:13.5px;color:var(--ink);font-weight:600}
+  .app-status i{font-style:normal;font-size:12px;color:var(--green-deep)}
+  .app-2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .app-3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+  .app-3 .ac-num{font-size:21px}
+  .rosca{display:flex;align-items:center;gap:16px}
+  .rosca-fig{
+    width:92px;height:92px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--green-deep) 0 44%, var(--ambar) 44% 78%, var(--roxo) 78% 100%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .rosca-fig::after{content:"";width:60px;height:60px;border-radius:50%;background:#fff}
+  .rosca-lista{flex:1;display:flex;flex-direction:column;gap:7px}
+  .rosca-lista div{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--slate)}
+  .rosca-lista b{margin-left:auto;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+  .bolinha{width:8px;height:8px;border-radius:50%;flex:none}
+  .app-ag{display:flex;flex-direction:column;gap:0}
+  .app-ag .lin{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+  .app-ag .lin:last-child{border-bottom:0;padding-bottom:0}
+  .app-ag .hr{color:var(--ink);font-weight:600;flex:none;font-variant-numeric:tabular-nums}
+  .app-ag .nm{color:var(--slate)}
+  .app-ag .sv{margin-left:auto;color:var(--slate-soft);font-size:11.5px}
+  .legenda-ex{margin-top:14px;text-align:center;font-size:12.5px;color:var(--slate-soft)}
+  .lista-check{list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:26px}
+  .lista-check li{display:flex;gap:12px;font-size:16.5px;line-height:1.5}
+  .lista-check svg{width:20px;height:20px;flex:none;margin-top:3px;stroke:var(--green-deep)}
+  .lista-check b{color:var(--ink);font-weight:600}
+
+
+  /* ── aparelhos ────────────────────────────────────────────────
+     Proporcoes reais: MacBook Pro 16 tem tela 3456x2234 (1.547) e o
+     iPhone 17 Pro Max tem 1320x2868 (0.460). O conteudo e desenhado num
+     canvas fixo e escalado pelo tamanho do container, com container
+     query, para ficar nitido em qualquer largura. */
+  .mostruario{display:grid;gap:40px;align-items:end;margin-top:46px}
+  @media(min-width:1040px){.mostruario{grid-template-columns:1fr 268px;gap:34px}}
+
+  /* MacBook Pro */
+  .mbp{width:100%}
+  .mbp-tampa{
+    background:linear-gradient(160deg,#3A3D42,#232629 42%,#1A1C1F);
+    border-radius:14px 14px 5px 5px;padding:11px 11px 13px;
+    box-shadow:0 22px 50px rgba(7,11,43,.22);
+  }
+  .mbp-tela{
+    position:relative;aspect-ratio:3456/2234;border-radius:5px;overflow:hidden;
+    container-type:inline-size;background:#EFEBE4;
+  }
+  .mbp-notch{
+    position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:12%;height:1.9%;background:#1A1C1F;border-radius:0 0 5px 5px;z-index:9;
+  }
+  .mbp-base{
+    height:11px;width:112%;margin-left:-6%;border-radius:0 0 10px 10px;
+    background:linear-gradient(180deg,#C9CDD3,#9AA0A8);position:relative;
+    box-shadow:0 10px 18px rgba(7,11,43,.14);
+  }
+  .mbp-base::after{
+    content:"";position:absolute;left:50%;transform:translateX(-50%);top:0;
+    width:13%;height:5px;background:rgba(0,0,0,.18);border-radius:0 0 7px 7px;
+  }
+
+  /* iPhone 17 Pro Max */
+  .iph{width:100%;max-width:268px;margin:0 auto}
+  .iph-corpo{
+    background:linear-gradient(160deg,#4A4E54,#2B2E33 45%,#1C1E21);
+    border-radius:44px;padding:9px;box-shadow:0 22px 50px rgba(7,11,43,.24);
+  }
+  .iph-tela{
+    position:relative;aspect-ratio:1320/2868;border-radius:36px;overflow:hidden;
+    container-type:inline-size;background:#EFEBE4;
+  }
+  .iph-ilha{
+    position:absolute;top:2.4%;left:50%;transform:translateX(-50%);
+    width:33%;height:3.6%;background:#08090B;border-radius:99px;z-index:9;
+  }
+  .iph-barra{
+    position:absolute;bottom:.9%;left:50%;transform:translateX(-50%);
+    width:34%;height:4px;background:rgba(0,0,0,.32);border-radius:99px;z-index:9;
+  }
+  .rot-ap{text-align:center;font-size:13px;color:var(--slate-soft);margin-top:16px}
+  .rot-ap b{color:var(--ink);font-weight:600}
+
+  /* ── o app por dentro. Canvas fixo, escalado pelo container. ── */
+  .tela{position:absolute;top:0;left:0;transform-origin:top left}
+  .tela.desk{width:1000px;height:646px;transform:scale(calc(100cqw / 1000px))}
+  .tela.mob{width:320px;height:695px;transform:scale(calc(100cqw / 320px))}
+
+  .app{
+    --bg:#F7F2EA;--side:#2A211C;--sideTx:#EFE6DC;--card:#FFF;--bd:#E9DFD3;
+    --tx:#3B322C;--tx2:#9A8C80;--ac:#B26B4A;--ok:#5C7A5A;--note:#F3E9DA;
+    height:100%;display:flex;background:var(--bg);color:var(--tx);
+    font-size:12px;line-height:1.4;
+  }
+  /* barbearia: azul de barbershop */
+  .app.barber{
+    --bg:#E9F1FA;--side:#0F2B4C;--sideTx:#D5E4F4;--card:#FFF;--bd:#D5E3F1;
+    --tx:#1C3350;--tx2:#7089A3;--ac:#1E63B0;--ok:#3E7D63;--note:#D9E8F7;
+  }
+
+  .lat{width:21%;background:var(--side);color:var(--sideTx);padding:20px 15px;display:flex;flex-direction:column;gap:3px}
+  .lat-marca{margin-bottom:18px;padding:0 6px}
+  .lat-marca b{display:block;font-size:14px;font-weight:700;letter-spacing:.05em}
+  .lat-marca i{font-style:normal;font-size:9px;opacity:.55;letter-spacing:.28em}
+  .lat-item{display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:8px;font-size:12.5px;opacity:.68}
+  .lat-item.on{background:rgba(255,255,255,.11);opacity:1;font-weight:600}
+  .lat-item .q{width:13px;height:13px;border-radius:3px;border:1.4px solid currentColor;opacity:.7;flex:none}
+  .lat-item .sino{margin-left:auto;background:#C0392B;color:#fff;border-radius:99px;padding:1px 6px;font-size:9px;font-weight:700}
+  .lat-hr{height:1px;background:rgba(255,255,255,.15);margin:11px 6px}
+  .lat-pe{margin-top:auto;font-size:9.5px;opacity:.45;padding:0 6px;line-height:1.55}
+
+  .cnt{flex:1;padding:18px;display:flex;flex-direction:column;gap:11px;min-width:0}
+  .st{background:var(--card);border:1px solid var(--bd);border-radius:11px;padding:12px 15px;display:flex;align-items:center;gap:11px}
+  .st .pt{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+  .st b{font-size:13px;font-weight:600;display:block}
+  .st i{font-style:normal;font-size:11px;color:var(--tx2)}
+  .st .pausar{margin-left:auto;border:1px solid var(--bd);border-radius:99px;padding:5px 14px;font-size:11px;color:var(--tx2)}
+  .fr{background:var(--note);border-radius:10px;padding:11px 15px;font-size:11.5px;color:var(--ac);font-style:italic}
+  .num{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .cx{background:var(--card);border:1px solid var(--bd);border-radius:11px;padding:12px 13px;min-width:0}
+  .cx .rot{font-size:10.5px;color:var(--tx2);margin-bottom:3px;line-height:1.3}
+  .cx .big{font-size:21px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .cx .big.ok{color:var(--ok)} .cx .big.ac{color:var(--ac)}
+  .sem{margin-top:8px;display:flex;flex-direction:column;gap:2px}
+  .sem div{display:flex;justify-content:space-between;font-size:9.5px;color:var(--tx2);font-variant-numeric:tabular-nums}
+  .atraso{display:inline-block;margin-top:6px;background:#FBEAEA;color:#B23A3A;border-radius:99px;padding:2px 8px;font-size:9.5px;font-weight:600}
+  .cap{font-size:9.5px;color:var(--tx2);margin-top:5px;line-height:1.4}
+  .duo{display:grid;grid-template-columns:1.12fr .88fr;gap:10px;flex:1;min-height:0}
+  .bl{background:var(--card);border:1px solid var(--bd);border-radius:11px;padding:13px 15px}
+  .bl .tt{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:7px}
+  .bl .tt span{font-size:10px;color:var(--ac);font-weight:500}
+  .ag div{padding:6px 0;border-bottom:1px solid var(--bd);font-size:10.5px}
+  .ag div:last-child{border-bottom:0}
+  .ag b{font-weight:600;font-variant-numeric:tabular-nums}
+  .ag i{font-style:normal;color:var(--tx2)}
+  .tri{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .tri div{background:var(--note);border-radius:9px;padding:13px 5px;text-align:center}
+  .tri b{display:block;font-size:22px;font-weight:700;letter-spacing:-.02em}
+  .tri i{font-style:normal;font-size:9.5px;color:var(--tx2)}
+
+  /* versao celular */
+  .appm{height:100%;display:flex;flex-direction:column;background:var(--bg);color:var(--tx);font-size:12px;line-height:1.4}
+  .appm-topo{padding:52px 15px 12px;display:flex;align-items:flex-end;justify-content:space-between;background:var(--card);border-bottom:1px solid var(--bd)}
+  .appm-topo b{font-size:14px;font-weight:700;letter-spacing:.05em}
+  .appm-topo i{font-style:normal;font-size:9px;opacity:.5;letter-spacing:.24em}
+  .appm-topo em{font-style:normal;font-size:11px;color:var(--tx2)}
+  .appm-cnt{flex:1;padding:12px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
+  .appm .num{grid-template-columns:1fr 1fr}
+  .appm-nav{display:flex;background:var(--side);color:var(--sideTx);padding:11px 4px 22px}
+  .appm-nav span{flex:1;text-align:center;font-size:8.5px;opacity:.55}
+  .appm-nav span.on{opacity:1;font-weight:700}
+
+  /* fatos do painel, em tabela para ler rapido */
+  .fatos{display:grid;gap:0;margin-top:38px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+  @media(min-width:820px){.fatos{grid-template-columns:1fr 1fr}}
+  .fato{display:flex;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);align-items:flex-start}
+  .fato svg{width:18px;height:18px;flex:none;margin-top:3px;stroke:var(--green-deep)}
+  .fato b{color:var(--ink);font-weight:600;font-size:15.5px;display:block}
+  .fato span{font-size:14.5px;color:var(--slate)}
+  @media(min-width:820px){.fato:nth-child(odd){border-right:1px solid var(--line)}}
+
+  /* dores, cada uma com a sua cor */
+  .dores{display:grid;gap:18px;margin-top:44px}
+  @media(min-width:780px){.dores{grid-template-columns:1fr 1fr;gap:20px}}
+  .dor{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px 26px;box-shadow:var(--shadow)}
+  .dor-topo{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px}
+  .dor .ico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none}
+  .dor .ico svg{width:21px;height:21px}
+  .dor h3{margin-top:6px}
+  .exemplo{margin-top:16px;border-radius:13px;padding:14px 16px;font-size:14px;line-height:1.5;border:1px solid}
+  .exemplo b{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:5px}
+  .d1 .ico{background:var(--bordo-bg)} .d1 .ico svg{stroke:var(--bordo)}
+  .d1 .exemplo{background:var(--bordo-bg);border-color:var(--bordo-line);color:var(--bordo)}
+  .d2 .ico{background:var(--ambar-bg)} .d2 .ico svg{stroke:var(--ambar)}
+  .d2 .exemplo{background:var(--ambar-bg);border-color:var(--ambar-line);color:var(--ambar)}
+  .d3 .ico{background:var(--roxo-bg)} .d3 .ico svg{stroke:var(--roxo)}
+  .d3 .exemplo{background:var(--roxo-bg);border-color:var(--roxo-line);color:var(--roxo)}
+  .d4 .ico{background:var(--azul-bg)} .d4 .ico svg{stroke:var(--azul)}
+  .d4 .exemplo{background:var(--azul-bg);border-color:var(--azul-line);color:var(--azul)}
+
+  .fonte{margin-top:26px;font-size:13.5px;color:var(--slate-soft)}
+  .fonte a{color:var(--slate-soft);text-decoration:underline;text-underline-offset:3px}
+
+  /* faixa escura */
+  .band{background:#CFF0DA;padding:clamp(56px,7vw,88px) 0}
+  .band p{font-size:clamp(25px,3.5vw,42px);font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1.16;max-width:20ch;text-wrap:balance}
+  .band em{font-style:normal;font-weight:300;color:#4B6B58}
+  .band .cta-row{margin-top:32px}
+  .band .btn:not(.verde){box-shadow:inset 0 0 0 1.5px rgba(7,11,43,.28),0 2px 6px rgba(7,11,43,.06)}
+  .band .btn:not(.verde):hover{box-shadow:inset 0 0 0 1.5px var(--ink),0 10px 20px rgba(7,11,43,.12)}
+
+  /* cartoes de funcionalidade */
+  .cards{display:grid;gap:20px;margin-top:44px}
+  @media(min-width:900px){.cards{grid-template-columns:repeat(3,1fr)}}
+  .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px 26px;box-shadow:var(--shadow)}
+  .card .ico{width:44px;height:44px;border-radius:12px;background:var(--mint);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+  .card .ico svg{width:22px;height:22px;stroke:var(--green-deep)}
+  .card h3{margin-bottom:10px}
+  .card p{font-size:15.5px}
+
+  /* o que voce ganha */
+  .pilares{display:grid;gap:28px;margin-top:48px}
+  @media(min-width:880px){.pilares{grid-template-columns:repeat(3,1fr);gap:36px}}
+  .pilar{padding-top:22px;border-top:3px solid var(--green)}
+  .pilar .ico{width:44px;height:44px;border-radius:12px;background:#fff;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+  .pilar .ico svg{width:22px;height:22px;stroke:var(--green-deep)}
+  .pilar h3{margin-bottom:8px}
+  .pilar p{font-size:15.5px}
+
+  /* comparativo de atendimento */
+  .confronto{display:grid;gap:18px;margin-top:40px}
+  @media(min-width:900px){.confronto{grid-template-columns:1fr 1fr;gap:22px}}
+  .lado{border-radius:20px;padding:26px;border:1px solid}
+  .lado.generico{background:var(--bordo-bg);border-color:var(--bordo-line)}
+  .lado.sua{background:#fff;border-color:var(--green);box-shadow:var(--shadow)}
+  .lado h3{font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:18px;font-weight:600}
+  .lado.generico h3{color:var(--bordo)}
+  .lado.sua h3{color:var(--green-deep)}
+  .balao{padding:15px 17px;border-radius:15px;font-size:15px;line-height:1.55;border-bottom-left-radius:5px}
+  .lado.generico .balao{background:#fff;color:#6B3245}
+  .lado.sua .balao{background:#D9FDD3;color:#0B1F16;font-weight:400;border-bottom-left-radius:15px;border-bottom-right-radius:5px}
+  .veredito{margin-top:14px;font-size:14px;font-weight:500}
+  .lado.generico .veredito{color:var(--bordo)}
+  .lado.sua .veredito{color:var(--green-deep)}
+
+  .suporte{margin-top:34px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--green);border-radius:18px;padding:30px 30px;display:grid;gap:20px;align-items:center;box-shadow:var(--shadow)}
+  @media(min-width:840px){.suporte{grid-template-columns:1fr auto;gap:34px}}
+  .suporte h3{font-size:23px;margin-bottom:8px}
+  .suporte p{font-size:16px;max-width:60ch}
+
+  /* prova */
+  .proof .grid{display:grid;gap:36px;align-items:start}
+  @media(min-width:920px){.proof .grid{grid-template-columns:1.15fr .85fr;gap:56px}}
+  .proof p{font-size:17px;margin-bottom:15px}
+  .proof p b{color:var(--ink);font-weight:600}
+  .status{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:var(--shadow)}
+  .status h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green-deep);font-weight:600;margin-bottom:16px}
+  .status .item{padding:13px 0;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start}
+  .status .item:last-child{border-bottom:0;padding-bottom:0}
+  .status .item:first-of-type{padding-top:0}
+  .pt-v{width:9px;height:9px;border-radius:50%;background:var(--green);margin-top:8px;flex:none}
+  .pt-v.soft{background:#CFD6E4}
+  .status strong{display:block;font-size:15.5px;font-weight:600;color:var(--ink);margin-bottom:2px}
+  .status span{font-size:14px;color:var(--slate-soft)}
+
+  /* depoimentos e clientes, escondidos ate existirem */
+  .depos{display:grid;gap:20px;margin-top:42px}
+  @media(min-width:820px){.depos{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}}
+  .depo{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px 26px;box-shadow:var(--shadow)}
+  .depo .aspa{color:var(--green);font-size:44px;line-height:.6;font-weight:700;display:block;margin-bottom:14px}
+  .depo p{font-size:16.5px;color:var(--ink);font-weight:400;line-height:1.55;margin-bottom:18px}
+  .depo cite{font-style:normal;font-size:14px;color:var(--slate-soft);display:block}
+  .depo cite b{display:block;color:var(--ink);font-weight:600;font-size:15.5px}
+  .logos{display:flex;flex-wrap:wrap;gap:34px 48px;align-items:center;justify-content:center;margin-top:36px}
+  .logos img{height:42px;width:auto;opacity:.72;filter:grayscale(1)}
+  .logos .nome{font-size:18px;font-weight:600;color:var(--slate-soft);padding:11px 20px;border:1px solid var(--line);border-radius:13px;background:#fff}
+
+  /* planos */
+  .chave{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px;gap:2px;margin-top:22px}
+  .chave button{
+    font:inherit;font-size:14.5px;font-weight:500;color:var(--slate);
+    background:transparent;border:0;cursor:pointer;padding:9px 22px;border-radius:999px;
+    transition:background .18s ease,color .18s ease;
+  }
+  .chave button.on{background:var(--ink);color:#fff;font-weight:600}
+  .economia{font-size:14px;color:var(--green-deep);font-weight:500;margin-top:12px}
+
+  .planos{display:grid;gap:20px;margin-top:34px;align-items:start}
+  @media(min-width:940px){.planos{grid-template-columns:repeat(3,1fr)}}
+  .plano{background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px 26px;display:flex;flex-direction:column;height:100%}
+  .plano.destaque{border:1.5px solid var(--green);box-shadow:var(--shadow-lg);position:relative}
+  .tag-destaque{
+    position:absolute;top:-13px;left:26px;background:var(--green);color:var(--ink);
+    font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    padding:6px 14px;border-radius:999px;
+  }
+  .plano h3{font-size:22px;margin-bottom:5px}
+  .plano .pra{font-size:14.5px;color:var(--slate-soft);margin-bottom:20px;min-height:42px}
+  .preco{font-size:34px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1.1;font-variant-numeric:tabular-nums}
+  .preco small{display:block;font-size:13px;font-weight:400;color:var(--slate-soft);letter-spacing:0;margin-top:5px}
+  .selo-eco{display:inline-block;margin-top:9px;background:var(--mint);color:var(--green-deep);border-radius:999px;padding:3px 11px;font-size:11.5px;font-weight:600}
+  .plano .mais{font-size:13px;font-weight:600;color:var(--ink);margin:22px 0 12px}
+  .plano ul{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:24px;flex:1}
+  .plano li{display:flex;gap:11px;font-size:15px;line-height:1.45}
+  .plano li svg{width:18px;height:18px;flex:none;margin-top:2px;stroke:var(--green-deep)}
+  .plano li.nao{color:var(--slate-soft)}
+  .plano li.nao svg{stroke:#B9C2CC}
+  .plano .btn{width:100%}
+  .plano .fina{font-size:12px;color:var(--slate-soft);text-align:center;margin-top:11px}
+  .rodape-planos{margin-top:26px;text-align:center;font-size:13.5px;color:var(--slate-soft)}
+
+  /* duvidas */
+  .faq{max-width:800px;margin-top:38px}
+  details{border-bottom:1px solid var(--line);padding:18px 0}
+  summary{font-size:17.5px;font-weight:600;color:var(--ink);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--green-deep);font-size:25px;font-weight:400;line-height:1;flex:none}
+  details[open] summary::after{content:"–"}
+  details p{margin-top:11px;font-size:15.5px;max-width:66ch}
+
+  .final{background:var(--mint);text-align:center;border-top:1px solid #D3EDDE}
+  .final .selo{margin:0 auto 26px}
+  .final h2{max-width:19ch;margin:0 auto 16px}
+  .final p{font-size:17.5px;max-width:52ch;margin:0 auto 28px}
+  .final .cta-row{justify-content:center}
+
+  footer{padding:32px 0;font-size:14px;color:var(--slate-soft);border-top:1px solid var(--line)}
+  .foot{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
+  footer a{text-decoration:none}
+  footer a:hover{color:var(--green-deep)}
+
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="i-chat" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.9 9.9 0 0 1-2.8-.4L3 21l1.6-4.7A8.2 8.2 0 0 1 3.6 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 8.4 8.4z"/></g>
+  <g id="i-users" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></g>
+  <g id="i-agenda" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="m9 15 2 2 4-4"/></g>
+  <g id="i-chart" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3.5 3.5L21 6"/></g>
+  <g id="i-relogio" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></g>
+  <g id="i-lua" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.4A8.6 8.6 0 0 1 9.6 3.5a8.6 8.6 0 1 0 10.9 10.9z"/></g>
+  <g id="i-calc" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2.5" width="16" height="19" rx="2.5"/><path d="M8 7h8M8 12h2m3 0h3M8 16.5h2m3 0h3"/></g>
+  <g id="i-familia" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1l1.7 1.7L12 21.5l7.1-7.1 1.7-1.7a5 5 0 0 0 0-7.1z"/></g>
+  <g id="i-energia" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.1 13.2a1 1 0 0 0 .8 1.6H11l-1 8.2 8.9-11.2a1 1 0 0 0-.8-1.6H12l1-8.2z"/></g>
+  <g id="i-crescer" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4v-7H4zM10 20h4V8h-4zM16 20h4V3h-4z"/></g>
+  <g id="i-x" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></g>
+  <g id="i-ok" fill="none" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></g>
+  <g id="i-wa" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8a5 5 0 0 1 5 5v2.5a5 5 0 0 1-5 5h-4.8c-1.2 1.9-2.8 3.2-4.8 3.9.9-1.2 1.4-2.5 1.5-4A5 5 0 0 1 3 11.5V9a5 5 0 0 1 5-5Z"/></g>
+</defs></svg>
+
+<header>
+  <div class="wrap bar">
+    <div class="brand">
+      <img src="assets/logo-claro.png" alt="Geff Trader">
+      <span>Sistemas Inteligentes</span>
+    </div>
+    <a class="btn sm" href="#contato" data-wa>Fala comigo</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="pilares-hero rv">
+        <span class="ph"><svg viewBox="0 0 24 24"><use href="#i-agenda"/></svg><b class="lg">Agenda marcada sozinha</b><b class="sm">Marca sozinha</b></span>
+        <span class="ph"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><b class="lg">Resposta em segundos</b><b class="sm">Responde na hora</b></span>
+        <span class="ph"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg><b class="lg">Caixa fechado no app</b><b class="sm">Caixa no app</b></span>
+        <span class="ph auto"><svg viewBox="0 0 24 24"><use href="#i-energia"/></svg><b class="lg">Tudo automático</b><b class="sm">Automático</b></span>
+      </div>
+      <h1 class="rv" style="--d:.05s"><span class="thin">Pare de perder clientes</span> por demora no WhatsApp.</h1>
+      <p class="lead rv" style="--d:.1s">A Aly responde em segundos, marca na agenda e lança tudo no financeiro, <b>do jeito que você fala</b>. A gestão do seu negócio na palma da sua mão.</p>
+      <div class="cta-row rv" style="--d:.15s">
+        <a class="btn verde" href="#contato" data-wa="Oi Geff, vi o site. Quero testar a Aly grátis no meu atendimento."><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Quero testar grátis</a>
+        <a class="btn" href="#planos">Ver os planos</a>
+      </div>
+      <p class="micro rv" style="--d:.2s">Resposta no mesmo dia. E quem responde sou eu.</p>
+    </div>
+
+    <div class="rv palco" style="--d:.15s">
+      <div class="tags-linha">
+        <span class="tag t1"><span class="pt"></span><span><b>23:47</b><i>você dormindo 💤</i></span></span>
+        <span class="tag t2"><span class="pt"></span><span><b>Resposta imediata</b><i>sem você abrir o celular 🏃🏽‍♂️</i></span></span>
+      </div>
+
+      <div class="fone">
+        <div class="fone-topo">
+          <div class="av">A</div>
+          <div><b>Aly</b><i>Online · Responde em segundos</i></div>
+        </div>
+        <div class="chat" id="chat">
+          <div class="msg deles" style="animation-delay:.2s">Oi, Aly... Mulher preciso urgente marcar minha sobrancelha pra amanhã. Tem que horário?<time>23:47</time></div>
+          <div class="msg dela"  style="animation-delay:1.1s">Oi, boa noite! A gente consegue sim 🤍 Tenho 11h ou 15h30 amanhã, qual prefere?<time>23:47</time></div>
+          <div class="msg deles" style="animation-delay:2.0s">15h30 pra mim<time>23:48</time></div>
+          <div class="msg dela"  style="animation-delay:2.8s">Combinado! Design personalizado amanhã às 15h30, R$ 30. Qual seu nome? ✨<time>23:48</time></div>
+          <div class="msg deles" style="animation-delay:3.6s">Bia<time>23:48</time></div>
+          <div class="msg dela"  style="animation-delay:4.4s">Prontinho, Bia 🤍 Te espero amanhã às 15h30. Um xerooo<time>23:48</time></div>
+        </div>
+      </div>
+
+      <div class="tags-linha">
+        <span class="tag t4"><span class="pt"></span><span><b>Tudo agendado ☺️</b><i>e já lançado no app pra você não se preocupar</i></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s-cloud">
+  <div class="wrap">
+    <p class="eyebrow rv">A espera custa caro</p>
+    <h2 class="rv" style="--d:.05s"><span class="thin">Você gosta de esperar?</span><br>Seu cliente também não.</h2>
+    <p class="lead rv" style="--d:.09s;margin-top:16px">Ele não espera. Ele manda a mesma mensagem pra mais dois lugares. E quem responder primeiro atende o cliente que era seu.</p>
+
+    <div class="dores">
+      <div class="dor d1 rv" style="--d:.12s">
+        <div class="dor-topo">
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#i-relogio"/></svg></span>
+          <h3>Cliente não espera resposta</h3>
+        </div>
+        <div class="exemplo"><b>Na prática</b>Pergunta às 23h, ninguém responde, e às 9h já marcou em outro lugar.</div>
+      </div>
+
+      <div class="dor d2 rv" style="--d:.16s">
+        <div class="dor-topo">
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg></span>
+          <h3>Horas do seu dia só respondendo</h3>
+        </div>
+        <div class="exemplo"><b>Na prática</b>Cliente na cadeira, celular apitando. Você pede licença, responde, e daqui a pouco apita de novo.</div>
+      </div>
+
+      <div class="dor d3 rv" style="--d:.2s">
+        <div class="dor-topo">
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#i-lua"/></svg></span>
+          <h3>O expediente que não acaba</h3>
+        </div>
+        <div class="exemplo"><b>Na prática</b>Seu negócio fecha às oito. Você não.</div>
+      </div>
+
+      <div class="dor d4 rv" style="--d:.24s">
+        <div class="dor-topo">
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#i-calc"/></svg></span>
+          <h3>O mês fecha na memória</h3>
+        </div>
+        <div class="exemplo"><b>Na prática</b>Perguntam como foi o mês e a resposta é "foi bom, acho".</div>
+      </div>
+    </div>
+
+    <p class="fonte rv" style="--d:.28s">Mais de 6 em cada 10 brasileiros já desistiram de uma compra pelo WhatsApp, e a velocidade da resposta está entre os principais motivos. <a href="https://www.opinionbox.com/" target="_blank" rel="noopener">Pesquisa Opinion Box</a>. Nos negócios que já usam a Aly, <b>4 em cada 10 mensagens chegam fora do horário comercial</b>. E todas são respondidas.</p>
+
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <span class="selo" aria-hidden="true">
+      <img class="selo-anel" src="assets/selo-anel.png" alt="">
+      <img class="selo-miolo" src="assets/selo-miolo.png" alt="">
+    </span>
+    <p class="rv"><em>Seu negócio não para de crescer por falta de clientes.</em> Ele para porque você precisa resolver tudo sozinho.</p>
+    <div class="cta-row rv" style="--d:.1s">
+      <a class="btn verde" href="#contato" data-wa="Oi Geff, vi o site. Hoje sou eu que faço tudo aqui no meu negócio. Quero testar a Aly grátis."><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Quero testar grátis</a>
+      <a class="btn" href="#planos">Ver os planos</a>
+    </div>
+  </div>
+</section>
+
+<section id="como">
+  <div class="wrap">
+    <div class="divisor" aria-hidden="true"><i></i></div>
+    <p class="eyebrow rv">O que a Aly faz</p>
+    <h2 class="rv" style="--d:.05s">Três coisas saem das suas costas.</h2>
+    <div class="cards">
+      <div class="card rv" style="--d:.1s">
+        <div class="ico"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg></div>
+        <h3>Atende por você, a qualquer hora</h3>
+        <p>Horário, valor e vaga respondidos na hora, do seu jeito de falar. O que precisa de você chega em você.</p>
+      </div>
+      <div class="card rv" style="--d:.15s">
+        <div class="ico"><svg viewBox="0 0 24 24"><use href="#i-users"/></svg></div>
+        <h3>Guarda o que você esqueceria</h3>
+        <p>Cada cliente com histórico: o que fez, quanto pagou, quando volta. Quem sumiu aparece antes de virar cliente perdido.</p>
+      </div>
+      <div class="card rv" style="--d:.2s">
+        <div class="ico"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg></div>
+        <h3>Fecha seu caixa sozinha</h3>
+        <p>Entrada por serviço, por dia, por profissional. O mês fecha em número, não em sensação.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s-cloud">
+  <div class="wrap">
+    <p class="eyebrow rv">O painel</p>
+    <h2 class="rv" style="--d:.05s"><span class="thin">Um painel que você entende</span><br>no primeiro dia.</h2>
+    <p class="lead rv" style="--d:.09s;margin-top:16px">Cinco números na abertura e a agenda do dia logo embaixo. Quem nunca mexeu em sistema nenhum abre e entende sozinho.</p>
+
+    <div class="mostruario">
+      <div class="rv" style="--d:.12s">
+        <div class="mbp">
+          <div class="mbp-tampa">
+            <div class="mbp-tela">
+              <span class="mbp-notch"></span>
+              <div class="tela desk">
+                <div class="app">
+                  <div class="lat">
+                    <div class="lat-marca"><b>LARA MENEZES</b><i>BEAUTY</i></div>
+                    <div class="lat-item on"><span class="q"></span>Início</div><div class="lat-item"><span class="q"></span>Agenda</div><div class="lat-item"><span class="q"></span>Clientes</div><div class="lat-item"><span class="q"></span>Financeiro</div><div class="lat-item"><span class="q"></span>Atendimento<span class="sino">36</span></div>
+                    <div class="lat-hr"></div>
+                    <div class="lat-item"><span class="q"></span>Extrato</div>
+                    <div class="lat-item"><span class="q"></span>Tema</div>
+                    <div class="lat-pe">O atendimento acontece no WhatsApp. Aqui é a visão geral do estúdio.</div>
+                  </div>
+                  <div class="cnt">
+                    <div class="st"><span class="pt"></span><span><b>Secretária atendendo</b><i>Respondendo no WhatsApp · 8 conversas com você</i></span><span class="pausar">Pausar</span></div>
+                    <div class="fr">Um lar sustentado com esforço honesto é motivo de orgulho, não de cansaço.</div>
+                    <div class="num">
+                      <div class="cx"><div class="rot">Faturamento do mês</div><div class="big ok">R$ 5.680</div><div class="sem"><div><span>semana 1</span><span>R$ 1.240</span></div><div><span>semana 2</span><span>R$ 1.520</span></div><div><span>semana 3</span><span>R$ 1.380</span></div><div><span>semana 4</span><span>R$ 1.540</span></div></div></div>
+                      <div class="cx"><div class="rot">A receber</div><div class="big">R$ 120</div><span class="atraso">1 em atraso</span></div>
+                      <div class="cx"><div class="rot">Procedimentos no mês</div><div class="big">57</div></div>
+                      <div class="cx"><div class="rot">Clientes</div><div class="big">134</div></div>
+                      <div class="cx"><div class="rot">Agendados</div><div class="big ac">16</div><div class="cap">clientes com horário marcado daqui pra frente</div></div>
+                    </div>
+                    <div class="duo">
+                      <div class="bl"><div class="tt">Hoje na agenda <span>ver semana</span></div><div class="ag"><div><b>09:00–10:00</b> · Renata <i>· Sobrancelha com henna</i></div><div><b>10:15–11:00</b> · Camila <i>· Design personalizado</i></div><div><b>11:30–12:10</b> · Aline <i>· Design personalizado</i></div><div><b>13:30–14:30</b> · Priscila <i>· Sobrancelha com henna</i></div><div><b>15:00–15:40</b> · Tatiane <i>· Design personalizado</i></div></div></div>
+                      <div class="bl"><div class="tt">Atendimentos da secretária <span>98 pessoas</span></div>
+                        <div class="tri"><div><b>22</b><i>atenção</i></div><div><b>34</b><i>em espera</i></div><div><b>42</b><i>concluídos</i></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mbp-base"></div>
+        </div>
+        <p class="rot-ap"><b>Studio de beleza</b> · no computador</p>
+      </div>
+
+      <div class="rv" style="--d:.18s">
+        <div class="iph">
+          <div class="iph-corpo">
+            <div class="iph-tela">
+              <span class="iph-ilha"></span><span class="iph-barra"></span>
+              <div class="tela mob">
+                <div class="app barber appm">
+                  <div class="appm-topo"><span><b>DOM</b><br><i>BARBEARIA</i></span><em>Início</em></div>
+                  <div class="appm-cnt">
+                    <div class="st"><span class="pt"></span><span><b>Secretária atendendo</b><i>8 conversas com você</i></span></div>
+                    <div class="fr">Um lar sustentado com esforço honesto é motivo de orgulho, não de cansaço.</div>
+                    <div class="num">
+                      <div class="cx"><div class="rot">Faturamento do mês</div><div class="big ok">R$ 5.940</div><div class="sem"><div><span>semana 1</span><span>R$ 1.380</span></div><div><span>semana 2</span><span>R$ 1.620</span></div><div><span>semana 3</span><span>R$ 1.450</span></div><div><span>semana 4</span><span>R$ 1.490</span></div></div></div>
+                      <div class="cx"><div class="rot">A receber</div><div class="big">R$ 90</div><span class="atraso">1 em atraso</span></div>
+                    </div>
+                    <div class="tri"><div><b>74</b><i>procedimentos</i></div><div><b>168</b><i>clientes</i></div><div><b>21</b><i>agendados</i></div></div>
+                    <div class="bl"><div class="tt">Hoje na agenda <span>ver semana</span></div><div class="ag"><div><b>09:00</b> · Rafael <i>· Corte e barba</i></div><div><b>10:00</b> · Diego <i>· Corte social</i></div><div><b>11:00</b> · Bruno <i>· Barba</i></div><div><b>14:00</b> · Léo <i>· Corte e pigmentação</i></div></div></div>
+                  </div>
+                  <div class="appm-nav"><span class="on">Início</span><span>Agenda</span><span>Clientes</span><span>Financeiro</span><span>Atendimento</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="rot-ap"><b>Barbearia</b> · no celular</p>
+      </div>
+    </div>
+
+    <div class="fatos rv" style="--d:.22s">
+      <div class="fato"><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg><span><b>O mesmo sistema nas duas telas</b><span>As cores, o nome e os serviços personalizados com o SEU negócio.</span></span></div>
+      <div class="fato"><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg><span><b>Painel simples</b><span>As informações mais importantes do seu negócio, automáticas no seu app.</span></span></div>
+      <div class="fato"><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg><span><b>No computador e no celular</b><span>Acompanhe de onde quiser.</span></span></div>
+      <div class="fato"><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg><span><b>A secretária organiza tudo</b><span>Ela te mostra a fase em que cada atendimento está, em tempo real.</span></span></div>
+    </div>
+    <p class="legenda-ex">Exemplo ilustrativo. Nomes e números são fictícios.</p>
+  </div>
+</section>
+
+<section class="s-fin">
+  <svg class="traco" viewBox="0 0 420 520" aria-hidden="true" fill="none">
+    <path d="M96 18c0 62-30 96-84 100 54 4 84 38 84 100 0-62 30-96 84-100-54-4-84-38-84-100z" stroke="currentColor" stroke-width="2"/>
+    <path d="M300 8c0 30-15 46-40 48 25 2 40 18 40 48 0-30 15-46 40-48-25-2-40-18-40-48z" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M-40 300C60 250 120 350 210 320s130-120 250-90" stroke="currentColor" stroke-width="1.6"/>
+  </svg>
+  <div class="wrap grid-fin">
+    <div>
+      <span class="tag-fin rv">Financeiro</span>
+      <h2 class="rv" style="--d:.05s"><span class="thin">Você sabe quanto ganha?</span><br>E quanto gasta?</h2>
+      <p class="lead rv" style="--d:.09s;margin-top:16px">Cada atendimento que a Aly marca já entra no caixa. As contas que você paga também. No fim do dia o número tá lá, sem você somar nada.</p>
+      <ul class="fin-lista rv" style="--d:.13s">
+        <li>Você vê quanto entrou hoje, na hora</li>
+        <li>Quem te deve e quem você deve, com data</li>
+        <li>No fim do mês, o total já tá pronto</li>
+      </ul>
+    </div>
+    <!-- O print real do Financeiro entra aqui: basta salvar a imagem em
+         assets/print-financeiro.png. Enquanto ela nao existe, o onerror
+         deixa o exemplo desenhado no lugar. -->
+    <div class="rv fin-fone" style="--d:.15s">
+      <div class="iph">
+        <div class="iph-corpo">
+          <div class="iph-tela">
+            <span class="iph-ilha"></span><span class="iph-barra"></span>
+            <img class="fin-print" src="assets/print-financeiro.png" alt="Financeiro do app"
+                 onerror="this.remove();document.getElementById('fin-exemplo').hidden=false">
+            <div class="tela mob" id="fin-exemplo" hidden>
+              <div class="app appm fin-demo">
+                <div class="appm-topo"><span><b>vi</b> Financeiro</span><em>☀︎ ▤</em></div>
+                <div class="appm-cnt">
+                  <div class="fd-periodo"><span class="fd-seta">‹</span><span class="fd-mes">Julho 2026 ▾</span><span class="fd-seta">›</span></div>
+                  <div class="bl">
+                    <div class="tt">Entradas de julho <span>categorias</span></div>
+                    <div class="fd-donut"><span style="background:conic-gradient(#B26B4A 0% 34%,#C9A227 34% 67%,#5C7A5A 67% 100%)"><i><b>R$ 5.840</b><em>entradas</em></i></span></div>
+                    <div class="fin-l"><span><u style="background:#B26B4A"></u>Design</span><b>R$ 1.980</b></div>
+                    <div class="fin-l"><span><u style="background:#C9A227"></u>Epilação</span><b>R$ 2.140</b></div>
+                    <div class="fin-l"><span><u style="background:#5C7A5A"></u>Perfuração</span><b>R$ 1.720</b></div>
+                    <div class="fd-saldo">Saldo de julho: R$ 4.580</div>
+                  </div>
+                  <div class="bl">
+                    <div class="tt">Resultado de julho</div>
+                    <div class="fd-donut"><span style="background:conic-gradient(#5C7A5A 0% 82%,#A94438 82% 100%)"><i><b>R$ 4.580</b><em>líquido</em></i></span></div>
+                    <div class="fin-l"><span><u style="background:#5C7A5A"></u>Entradas</span><b>R$ 5.840</b></div>
+                    <div class="fin-l"><span><u style="background:#A94438"></u>Saídas</span><b>R$ 1.260</b></div>
+                  </div>
+                </div>
+                <div class="appm-nav"><span>Início</span><span>Agenda</span><span>Clientes</span><span class="on">Financeiro</span><span>Atendimento</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="rot-ap"><b>Financeiro</b> · no celular</p>
+    </div>
+  </div>
+</section>
+
+<section class="s-mint">
+  <svg class="traco" viewBox="0 0 420 520" aria-hidden="true" fill="none">
+    <path d="M96 18c0 62-30 96-84 100 54 4 84 38 84 100 0-62 30-96 84-100-54-4-84-38-84-100z" stroke="currentColor" stroke-width="2"/>
+    <path d="M300 8c0 30-15 46-40 48 25 2 40 18 40 48 0-30 15-46 40-48-25-2-40-18-40-48z" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M-40 300C60 250 120 350 210 320s130-120 250-90" stroke="currentColor" stroke-width="1.6"/>
+  </svg>
+  <div class="wrap">
+    <p class="eyebrow rv">O que você ganha de volta</p>
+    <h2 class="rv" style="--d:.05s"><span class="thin">Você descansa.</span><br>Seu negócio não para.</h2>
+    <p class="lead rv" style="--d:.09s;margin-top:16px;color:var(--ink);font-weight:400">A Aly segue atendendo, marcando e lançando enquanto você vive. E devolve o que o WhatsApp tomou:</p>
+    <div class="pilares">
+      <div class="pilar rv" style="--d:.13s">
+        <div class="ico"><svg viewBox="0 0 24 24"><use href="#i-familia"/></svg></div>
+        <h3>Tempo com a família</h3>
+        <p>O jantar sem o celular na mão. O domingo que volta a ser domingo.</p>
+      </div>
+      <div class="pilar rv" style="--d:.17s">
+        <div class="ico"><svg viewBox="0 0 24 24"><use href="#i-energia"/></svg></div>
+        <h3>Energia pro que precisa de você</h3>
+        <p>Fim do dia com cabeça pra decidir, não só pra apagar incêndio.</p>
+      </div>
+      <div class="pilar rv" style="--d:.21s">
+        <div class="ico"><svg viewBox="0 0 24 24"><use href="#i-crescer"/></svg></div>
+        <h3>Espaço pra crescer</h3>
+        <p>Contratar, abrir horário novo, criar serviço. Isso cabe de novo na sua agenda.</p>
+      </div>
+    </div>
+    <div class="cta-row rv" style="--d:.25s;margin-top:38px">
+      <a class="btn verde" href="#contato" data-wa="Oi Geff, vi o site. Quero descansar e deixar a Aly atender. Bora testar grátis?"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Quero testar grátis</a>
+    </div>
+    <p class="micro rv" style="--d:.28s;margin-top:12px">O teste é grátis. Tá esperando o quê?</p>
+  </div>
+</section>
+
+<section class="s-white">
+  <div class="wrap">
+    <p class="eyebrow rv">Feita com a sua cara</p>
+    <h2 class="rv" style="--d:.05s"><span class="thin">Ela aprende a falar</span><br>como você fala.</h2>
+    <p class="lead rv" style="--d:.09s;margin-top:16px">A Aly não sai de uma caixa pronta. Eu escuto como você atende hoje, o que você diz e o que você nunca diria, e configuro ela nisso.</p>
+
+    <div class="confronto">
+      <div class="lado generico rv" style="--d:.13s">
+        <h3>Atendimento de prateleira</h3>
+        <div class="balao">Olá! Sou o assistente virtual. Digite 1 para agendar, 2 para valores, 3 para falar com um atendente.</div>
+        <p class="veredito">O cliente sabe na primeira linha que não é você.</p>
+      </div>
+      <div class="lado sua rv" style="--d:.17s">
+        <h3>A sua Aly</h3>
+        <div class="balao">Oi, Rafael! Que bom te ver por aqui de novo. Tenho quinta às 14h, que costuma ser o seu horário. Fecho pra você?</div>
+        <p class="veredito">O cliente sente que foi atendido por quem o conhece.</p>
+      </div>
+    </div>
+
+    <div class="suporte rv" style="--d:.2s">
+      <div>
+        <h3>Precisou de algo, é só falar.</h3>
+        <p>Mudou preço, entrou serviço novo, contratou alguém: me chama que eu ajusto. Meu interesse é o seu negócio andar bem, porque é assim que você continua comigo. E você vê tudo funcionando antes de pagar.</p>
+      </div>
+      <a class="btn verde" href="#contato" data-wa="Oi Geff, vi o site. Quero testar a Aly grátis, configurada com a cara do meu negócio."><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Quero testar grátis</a>
+    </div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="wrap grid">
+    <div>
+      <p class="eyebrow rv">Prova</p>
+      <h2 class="rv" style="--d:.05s"><span class="thin">A gente vivia isso</span><br>dentro de casa.</h2>
+      <p class="rv" style="--d:.1s;margin-top:22px"><b>O studio da minha esposa foi o primeiro cliente do sistema.</b> Agenda cheia, faturamento bom, e mesmo assim faltava tempo pra família.</p>
+      <p class="rv" style="--d:.14s">Presa no WhatsApp o dia inteiro, ela não tinha como crescer. O dia terminava antes das mensagens acabarem.</p>
+      <p class="rv" style="--d:.18s"><b>Hoje a Aly atende, marca e registra.</b> O mês fecha sem planilha. E o jantar voltou a ser jantar.</p>
+    </div>
+    <div class="status rv" style="--d:.15s">
+      <h4>Onde está rodando</h4>
+      <div class="item"><span class="pt-v"></span><span><strong>Studio de sobrancelhas</strong><span>Em operação diária. Atendimento, clientes e financeiro.</span></span></div>
+      <div class="item"><span class="pt-v"></span><span><strong>Barbearia</strong><span>Em teste desde julho de 2026. Outro segmento, mesmo sistema.</span></span></div>
+      <div class="item"><span class="pt-v soft"></span><span><strong>Próximo</strong><span>Poucos negócios por vez, porque quem implanta junto com você sou eu.</span></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="s-cloud" id="depoimentos" hidden>
+  <div class="wrap">
+    <p class="eyebrow rv">Quem já usa</p>
+    <h2 class="rv" style="--d:.05s">Nas palavras de quem atende.</h2>
+    <div class="depos" id="lista-depoimentos"></div>
+  </div>
+</section>
+
+<section class="s-white" id="clientes" hidden>
+  <div class="wrap" style="text-align:center">
+    <p class="eyebrow rv">Negócios que já rodam com a gente</p>
+    <div class="logos rv" id="lista-logos" style="--d:.06s"></div>
+  </div>
+</section>
+
+<section id="planos" class="s-cloud">
+  <div class="wrap">
+    <p class="eyebrow rv">Planos</p>
+    <h2 class="rv" style="--d:.05s"><span class="thin">Escolhe pelo tamanho</span><br>do seu atendimento.</h2>
+
+    <div class="chave rv" style="--d:.09s;display:none" role="group" aria-label="Duração do plano">
+      <button type="button" data-prazo="seis" class="on">6 meses</button>
+      <button type="button" data-prazo="doze">12 meses</button>
+    </div>
+    <p class="economia rv" style="--d:.11s" id="economia"></p>
+
+    <div class="planos">
+      <div class="plano rv" style="--d:.13s">
+        <h3>Essencial</h3>
+        <p class="pra">Pra quem está começando e só quer parar de responder mensagem.</p>
+        <div class="preco" data-preco="essencial">Sob consulta<small>Definido na conversa, pelo seu atendimento</small></div>
+        <p class="mais">O que entra:</p>
+        <ul><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>150 agendamentos por mês</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>500 conversas com a Aly por mês</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>1 número de WhatsApp</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>2 agendas independentes</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Painel completo no celular e no computador</li><li class="nao"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg>Integração com o que você já usa</li><li class="nao"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg>Relatórios sob medida</li></ul>
+        <a class="btn" href="#contato" data-wa="Oi Geff, vi o site. Quero testar grátis no plano Essencial.">Quero testar grátis</a>
+        <p class="fina">Teste grátis antes de decidir</p>
+      </div>
+
+      <div class="plano destaque rv" style="--d:.17s">
+        <span class="tag-destaque">Mais escolhido</span>
+        <h3>Completo</h3>
+        <p class="pra">Pra quem já tem volume e quer o financeiro junto do atendimento.</p>
+        <div class="preco" data-preco="completo">Sob consulta<small>Definido na conversa, pelo seu atendimento</small></div>
+        <p class="mais">Tudo do Essencial, e mais:</p>
+        <ul><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>600 agendamentos por mês</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>2.000 conversas com a Aly por mês</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>5 números de WhatsApp e 10 agendas</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Aviso de cliente que sumiu</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Financeiro por profissional</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Suporte prioritário</li></ul>
+        <a class="btn verde" href="#contato" data-wa="Oi Geff, vi o site. Quero testar grátis no plano Completo."><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Quero testar grátis</a>
+        <p class="fina">Teste grátis antes de decidir</p>
+      </div>
+
+      <div class="plano rv" style="--d:.21s">
+        <h3>Multi</h3>
+        <p class="pra">Pra operação com mais de uma unidade ou equipe grande.</p>
+        <div class="preco" data-preco="multi">Sob consulta<small>Definido na conversa, pelo seu atendimento</small></div>
+        <p class="mais">Tudo do Completo, e mais:</p>
+        <ul><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Agendamentos e conversas sem limite</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Unidades e agendas sem limite</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Integrações sob medida</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Implantação e acompanhamento dedicados</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Um painel por unidade e a visão geral no seu</li></ul>
+        <a class="btn" href="#contato" data-wa="Oi Geff, vi o site. Minha operação é maior. Queria falar sobre o Multi.">Falar sobre o Multi</a>
+        <p class="fina">Conversa antes de qualquer proposta</p>
+      </div>
+    </div>
+
+    <p class="rodape-planos rv" style="--d:.25s">Implantação feita por mim em todos os planos · Pix ou cartão · prazo e condições combinados na conversa</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="divisor" aria-hidden="true"><i></i></div>
+    <p class="eyebrow rv">Dúvidas frequentes</p>
+    <h2 class="rv" style="--d:.05s">Tudo o que você precisa saber.</h2>
+    <div class="faq">
+      <details open class="rv" style="--d:.08s">
+        <summary>Serve pro meu tipo de negócio?</summary>
+        <p>Hoje roda em studio de beleza e em barbearia, e não foi feito pra um segmento só. Se o seu negócio marca horário, atende no WhatsApp e recebe por serviço, provavelmente serve. Me manda como funciona o seu que eu te digo com sinceridade, inclusive se não servir.</p>
+      </details>
+      <details class="rv" style="--d:.1s">
+        <summary>Meu cliente vai perceber que é robô?</summary>
+        <p>Ele vai perceber que foi respondido rápido. A Aly usa o seu jeito de falar, com os seus serviços e os seus preços. E sempre que a conversa sai do previsto, ela passa pra você.</p>
+      </details>
+      <details class="rv" style="--d:.12s">
+        <summary>Como começa e quanto tempo leva?</summary>
+        <p>Trinta minutos de conversa pra eu entender seu atendimento. Eu configuro tudo, você não instala nada nem aprende ferramenta nova. Testamos juntos alguns dias, eu ajusto, e a Aly assume.</p>
+      </details>
+      <details class="rv" style="--d:.14s">
+        <summary>Como funciona o teste gratuito?</summary>
+        <p>A gente configura a Aly com os seus serviços e ela atende de verdade por alguns dias, no seu WhatsApp. Você vê funcionando antes de decidir qualquer coisa. Me chama que eu te explico o formato.</p>
+      </details>
+      <details class="rv" style="--d:.16s">
+        <summary>Quanto custa?</summary>
+        <p>Depende do tamanho do seu atendimento e de qual plano faz sentido. Me chama no WhatsApp que em cinco minutos de conversa eu te falo, sem enrolação e sem proposta de trinta páginas.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="contato">
+  <div class="wrap">
+    <span class="selo rv">
+      <img class="selo-anel" src="assets/selo-anel.png" alt="">
+      <img class="selo-miolo" src="assets/selo-miolo.png" alt="Geff Trader">
+    </span>
+    <h2 class="rv" style="--d:.05s">Se você chegou até aqui, se reconheceu em alguma parte.</h2>
+    <p class="rv" style="--d:.09s">Me manda uma mensagem contando como funciona seu atendimento hoje. Eu te digo se resolve o seu caso ou não. Se não resolver, eu falo também.</p>
+    <div class="cta-row rv" style="--d:.13s">
+      <a class="btn verde" href="#" data-wa="Oi Geff, vi o site. Quero te contar como funciona meu atendimento hoje e saber se a Aly resolve o meu caso."><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Me conta se resolve o meu caso</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span>Geff Trader IA · Sistemas Inteligentes</span>
+    <span><a href="#" data-ig>Instagram</a> · <a href="#" data-wa>WhatsApp</a></span>
+  </div>
+</footer>
+
+<a class="zap" href="#" data-wa aria-label="Falar no WhatsApp">
+  <img class="selo-anel" src="assets/selo-anel.png" alt="">
+  <img class="selo-miolo" src="assets/selo-miolo.png" alt="">
+  <span class="zap-wa"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg></span>
+</a>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   PAINEL DE CONTROLE
+   Tudo que muda com o tempo fica aqui. Nao precisa mexer no resto.
+   ───────────────────────────────────────────────────────────── */
+const CONFIG = {
+  whatsapp : "5587991465946",     // DDI + DDD + numero, so digitos
+  instagram: "gefftrader_",       // sem o @
+  mensagem : "Oi Geff, vi o site e queria entender como o sistema funciona pro meu negócio.",
+
+  // Preco mensal de cada plano, por prazo. Vazio mostra "Sob consulta" e a
+  // chave 6/12 meses fica escondida (ela volta sozinha quando um preco entrar).
+  // Dica: pode ancorar so o Essencial, ex. { seis: "a partir de R$ 149", doze: "" }.
+  // Ex: essencial: { seis: "R$ 149", doze: "R$ 129" }
+  precos: {
+    essencial: { seis: "", doze: "" },
+    completo : { seis: "", doze: "" },
+    multi    : { seis: "", doze: "" }
+  },
+
+  // Frase que aparece quando o visitante escolhe 12 meses. Vazio esconde.
+  // Ex: "Economize 2 meses no plano de 12 meses"
+  economia: "",
+
+  // Depoimentos. Lista vazia = secao nao aparece no site.
+  // Ex: { texto: "...", nome: "Viviane", negocio: "Vi Studio, Petrolina" }
+  depoimentos: [],
+
+  // Negocios que ja usam. Vazio = secao escondida.
+  // Use { nome: "Vi Studio" } ou { nome: "Vi Studio", img: "assets/cliente-vi.png" }
+  clientes: []
+};
+
+/* ── contatos. Cada botao pode levar sua propria mensagem em data-wa,
+      entao a primeira frase de quem te chama ja diz o que converteu. ── */
+document.querySelectorAll("[data-wa]").forEach(function (a) {
+  const texto = a.getAttribute("data-wa") || CONFIG.mensagem;
+  a.href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(texto);
+  a.target = "_blank"; a.rel = "noopener";
+});
+document.querySelectorAll("[data-ig]").forEach(function (a) {
+  a.href = "https://instagram.com/" + CONFIG.instagram; a.target = "_blank"; a.rel = "noopener";
+});
+
+/* ── precos e a chave de 6 ou 12 meses ── */
+let prazo = "seis";
+
+function pintarPrecos() {
+  // Sem nenhum preco preenchido, uma chave que nao muda nada so gera desconfianca.
+  const temPreco = Object.keys(CONFIG.precos).some(function (k) {
+    return CONFIG.precos[k].seis || CONFIG.precos[k].doze;
+  });
+  document.querySelector(".chave").style.display = temPreco ? "" : "none";
+  // O rodape so fala em prazo quando existe prazo na tela.
+  document.querySelector(".rodape-planos").textContent = temPreco
+    ? "Implantação feita por mim em todos os planos · Pix ou cartão · sem fidelidade além do prazo escolhido"
+    : "Implantação feita por mim em todos os planos · Pix ou cartão · prazo e condições combinados na conversa";
+  const meses = prazo === "seis" ? "6 meses" : "12 meses";
+  document.querySelectorAll("[data-preco]").forEach(function (el) {
+    const valor = (CONFIG.precos[el.dataset.preco] || {})[prazo];
+    el.innerHTML = valor
+      ? valor + "<small>por mês, no plano de " + meses + "</small>"
+      : "Sob consulta<small>Definido na conversa, pelo seu atendimento</small>";
+  });
+  const eco = document.getElementById("economia");
+  eco.textContent = prazo === "doze" ? (CONFIG.economia || "") : "";
+}
+
+document.querySelectorAll("[data-prazo]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    document.querySelectorAll("[data-prazo]").forEach(function (x) { x.classList.remove("on"); });
+    b.classList.add("on");
+    prazo = b.dataset.prazo;
+    pintarPrecos();
+  });
+});
+pintarPrecos();
+
+/* ── depoimentos ── */
+if (CONFIG.depoimentos.length) {
+  document.getElementById("lista-depoimentos").innerHTML = CONFIG.depoimentos.map(function (d, i) {
+    return '<figure class="depo rv" style="--d:' + (i * .06) + 's">' +
+           '<span class="aspa">&ldquo;</span><p>' + d.texto + '</p>' +
+           '<figcaption><cite><b>' + d.nome + '</b>' + (d.negocio || "") + '</cite></figcaption></figure>';
+  }).join("");
+  document.getElementById("depoimentos").hidden = false;
+}
+
+/* ── clientes ── */
+if (CONFIG.clientes.length) {
+  document.getElementById("lista-logos").innerHTML = CONFIG.clientes.map(function (c) {
+    return c.img ? '<img src="' + c.img + '" alt="' + c.nome + '">'
+                 : '<span class="nome">' + c.nome + '</span>';
+  }).join("");
+  document.getElementById("clientes").hidden = false;
+}
+
+/* ── revelacao no scroll ── */
+const obs = new IntersectionObserver(function (entradas) {
+  entradas.forEach(function (e) {
+    if (e.isIntersecting) { e.target.classList.add("on"); obs.unobserve(e.target); }
+  });
+}, { threshold: .12, rootMargin: "0px 0px -8% 0px" });
+document.querySelectorAll(".rv").forEach(function (el) { obs.observe(el); });
+
+/* ── a conversa so comeca quando entra na tela ── */
+const chat = document.getElementById("chat");
+chat.querySelectorAll(".msg").forEach(function (m) { m.style.animationPlayState = "paused"; });
+new IntersectionObserver(function (e, o) {
+  if (e[0].isIntersecting) {
+    chat.querySelectorAll(".msg").forEach(function (m) { m.style.animationPlayState = "running"; });
+    o.disconnect();
+  }
+}, { threshold: .3 }).observe(chat);
+</script>
+</body>
+</html>
