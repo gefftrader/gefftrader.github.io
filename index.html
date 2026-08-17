@@ -739,11 +739,11 @@
 
       <div class="fone">
         <div class="fone-topo">
-          <div class="av">A</div>
-          <div><b>Aly</b><i>Online · Responde em segundos</i></div>
+          <div class="av">B</div>
+          <div><b>Bia</b><i>a Aly respondeu por você</i></div>
         </div>
         <div class="chat" id="chat">
-          <div class="msg deles" style="animation-delay:.2s">Oi, Aly... Mulher preciso urgente marcar minha sobrancelha pra amanhã. Tem que horário?<time>23:47</time></div>
+          <div class="msg deles" style="animation-delay:.2s">Oi... Mulher preciso urgente marcar minha sobrancelha pra amanhã. Tem que horário?<time>23:47</time></div>
           <div class="msg dela"  style="animation-delay:1.1s">Oi, boa noite! A gente consegue sim 🤍 Tenho 11h ou 15h30 amanhã, qual prefere?<time>23:47</time></div>
           <div class="msg deles" style="animation-delay:2.0s">15h30 pra mim<time>23:48</time></div>
           <div class="msg dela"  style="animation-delay:2.8s">Combinado! Design personalizado amanhã às 15h30, R$ 30. Qual seu nome? ✨<time>23:48</time></div>
@@ -1251,16 +1251,19 @@ function amanhaPorExtenso() {
   return dia.charAt(0).toUpperCase() + dia.slice(1) + ", " + data;
 }
 
+/* No topo do aparelho vai o nome de QUEM ESTA DO OUTRO LADO, que e o cliente.
+   As mensagens verdes sao da atendente, entao ela nunca aparece no cabecalho.
+   O subtitulo e onde ela assina o atendimento. */
 const CONVERSAS = {
-  studio: { nome: "Aly", msgs: [
-    { de: "deles", txt: "Oi, Aly... Mulher preciso urgente marcar minha sobrancelha pra amanhã. Tem que horário?", h: "23:47" },
+  studio: { cliente: "Bia", atendente: "Aly", artigo: "a", msgs: [
+    { de: "deles", txt: "Oi... Mulher preciso urgente marcar minha sobrancelha pra amanhã. Tem que horário?", h: "23:47" },
     { de: "dela",  txt: "Oi, boa noite! A gente consegue sim 🤍 Tenho 11h ou 15h30 amanhã, qual prefere?", h: "23:47" },
     { de: "deles", txt: "15h30 pra mim", h: "23:48" },
     { de: "dela",  txt: "Combinado! Design personalizado amanhã às 15h30, R$ 30. Qual seu nome? ✨", h: "23:48" },
     { de: "deles", txt: "Bia", h: "23:48" },
     { de: "dela",  txt: "Prontinho, Bia 🤍 Te espero amanhã às 15h30. Um xerooo", h: "23:48" }
   ]},
-  barbearia: { nome: "Téo", msgs: [
+  barbearia: { cliente: "Fernandinho", atendente: "Téo", artigo: "o", msgs: [
     { de: "deles", txt: "Boa noite! Consigo cortar amanhã cedo, antes do trabalho?", h: "22:31" },
     { de: "dela",  txt: "Opa, boa noite! 💈 Tenho 07:00 ou 09:00, qual fica melhor?", h: "22:31" },
     { de: "deles", txt: "09:00 pra mim", h: "22:32" },
@@ -1278,8 +1281,9 @@ document.querySelectorAll(".alterna button").forEach(function (b) {
     const c = CONVERSAS[b.dataset.conversa];
     if (!c) return;
     document.querySelectorAll(".alterna button").forEach(function (x) { x.classList.toggle("on", x === b); });
-    document.querySelector(".fone-topo .av").textContent = c.nome.charAt(0);
-    document.querySelector(".fone-topo b").textContent = c.nome;
+    document.querySelector(".fone-topo .av").textContent = c.cliente.charAt(0);
+    document.querySelector(".fone-topo b").textContent = c.cliente;
+    document.querySelector(".fone-topo i").textContent = c.artigo + " " + c.atendente + " respondeu por você";
     document.getElementById("chat").innerHTML = c.msgs.map(function (m, i) {
       return '<div class="msg ' + m.de + '" style="animation-delay:' + (0.15 + i * 0.75).toFixed(2) + 's">' + m.txt + '<time>' + m.h + '</time></div>';
     }).join("");
