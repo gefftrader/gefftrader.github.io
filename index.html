@@ -625,6 +625,10 @@
   .plano .btn{width:100%}
   .plano .fina{font-size:12px;color:var(--slate-soft);text-align:center;margin-top:11px}
   .rodape-planos{margin-top:26px;text-align:center;font-size:13.5px;color:var(--slate-soft)}
+  /* linha de quem nao cabe nas tres faixas. Separada do rodape porque o JS
+     reescreve o rodape e apagaria esse texto. */
+  .fora-faixa{margin-top:24px;text-align:center;font-size:14.5px;color:var(--slate);
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 20px}
 
   /* duvidas */
   .faq{max-width:800px;margin-top:38px}
@@ -1049,46 +1053,48 @@
 <section id="planos" class="s-cloud">
   <div class="wrap">
     <p class="eyebrow rv">Planos</p>
-    <h2 class="rv" style="--d:.05s"><span class="thin">Escolhe pelo tamanho</span><br>do seu atendimento.</h2>
+    <h2 class="rv" style="--d:.05s"><span class="thin">Escolhe pelo tamanho</span><br>da sua equipe.</h2>
+    <p class="lead rv" style="--d:.07s;margin-top:14px">Você paga uma vez, dividido em doze. Não é mensalidade que não acaba.</p>
 
-    <div class="chave rv" style="--d:.09s;display:none" role="group" aria-label="Duração do plano">
-      <button type="button" data-prazo="seis" class="on">6 meses</button>
-      <button type="button" data-prazo="doze">12 meses</button>
+    <div class="chave rv" style="--d:.09s;display:none" role="group" aria-label="Forma de pagamento">
+      <button type="button" data-forma="parcelado" class="on">12x no cartão</button>
+      <button type="button" data-forma="avista">À vista</button>
     </div>
     <p class="economia rv" style="--d:.11s" id="economia"></p>
 
     <div class="planos">
       <div class="plano rv" style="--d:.13s">
-        <h3>Essencial</h3>
-        <p class="pra">Pra quem está começando e só quer parar de responder mensagem.</p>
-        <div class="preco" data-preco="essencial">Sob consulta<small>Definido na conversa, pelo seu atendimento</small></div>
+        <h3>Solo</h3>
+        <p class="pra">Você atende sozinho e quer parar de viver dentro do WhatsApp.</p>
+        <div class="preco" data-preco="solo">Sob consulta<small>Definido na conversa, pelo seu atendimento</small></div>
         <p class="mais">O que entra:</p>
-        <ul><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>150 agendamentos por mês</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>500 conversas com a Aly por mês</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>1 número de WhatsApp</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>2 agendas independentes</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Painel completo no celular e no computador</li><li class="nao"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg>Integração com o que você já usa</li><li class="nao"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg>Relatórios sob medida</li></ul>
-        <a class="btn" href="#contato" data-wa="Oi Geff, vi o site. Quero testar grátis no plano Essencial.">Quero testar grátis</a>
-        <p class="fina">Teste grátis antes de decidir</p>
+        <ul><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>A Aly responde seu WhatsApp e marca na agenda</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Lembrete automático pro cliente não faltar</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Seu caixa fecha sozinho, sem planilha</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Painel no celular e no computador</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Um ano de suporte, com ajuste todo mês</li></ul>
+        <a class="btn" href="#contato" data-wa="Oi Geff, vi o site. Atendo sozinho e quero testar grátis o plano Solo.">Quero testar grátis</a>
+        <p class="fina">14 dias grátis antes de decidir</p>
       </div>
 
       <div class="plano destaque rv" style="--d:.17s">
-        <span class="tag-destaque">Mais escolhido</span>
-        <h3>Completo</h3>
-        <p class="pra">Pra quem já tem volume e quer o financeiro junto do atendimento.</p>
-        <div class="preco" data-preco="completo">Sob consulta<small>Definido na conversa, pelo seu atendimento</small></div>
-        <p class="mais">Tudo do Essencial, e mais:</p>
-        <ul><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>600 agendamentos por mês</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>2.000 conversas com a Aly por mês</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>5 números de WhatsApp e 10 agendas</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Aviso de cliente que sumiu</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Financeiro por profissional</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Suporte prioritário</li></ul>
-        <a class="btn verde" href="#contato" data-wa="Oi Geff, vi o site. Quero testar grátis no plano Completo."><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Quero testar grátis</a>
-        <p class="fina">Teste grátis antes de decidir</p>
+        <h3>Dupla</h3>
+        <p class="pra">Vocês dois atendem e as agendas não podem cruzar horário.</p>
+        <div class="preco" data-preco="dupla">Sob consulta<small>Definido na conversa, pelo seu atendimento</small></div>
+        <p class="mais">Tudo do Solo, e mais:</p>
+        <ul><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Duas agendas separadas, sem horário batendo</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Caixa separado por profissional</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Aviso quando um cliente para de voltar</li></ul>
+        <a class="btn verde" href="#contato" data-wa="Oi Geff, vi o site. Somos dois atendendo e quero testar grátis o plano Dupla."><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Quero testar grátis</a>
+        <p class="fina">14 dias grátis antes de decidir</p>
       </div>
 
       <div class="plano rv" style="--d:.21s">
-        <h3>Multi</h3>
-        <p class="pra">Pra operação com mais de uma unidade ou equipe grande.</p>
-        <div class="preco" data-preco="multi">Sob consulta<small>Definido na conversa, pelo seu atendimento</small></div>
-        <p class="mais">Tudo do Completo, e mais:</p>
-        <ul><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Agendamentos e conversas sem limite</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Unidades e agendas sem limite</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Integrações sob medida</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Implantação e acompanhamento dedicados</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Um painel por unidade e a visão geral no seu</li></ul>
-        <a class="btn" href="#contato" data-wa="Oi Geff, vi o site. Minha operação é maior. Queria falar sobre o Multi.">Falar sobre o Multi</a>
-        <p class="fina">Conversa antes de qualquer proposta</p>
+        <h3>Equipe</h3>
+        <p class="pra">De três a cinco profissionais, com movimento o dia todo.</p>
+        <div class="preco" data-preco="equipe">Sob consulta<small>Definido na conversa, pelo seu atendimento</small></div>
+        <p class="mais">Tudo da Dupla, e mais:</p>
+        <ul><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Até cinco agendas ao mesmo tempo</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Quanto cada profissional rendeu no mês</li><li><svg viewBox="0 0 24 24"><use href="#i-ok"/></svg>Você na frente da fila quando chamar</li></ul>
+        <a class="btn" href="#contato" data-wa="Oi Geff, vi o site. Temos mais de três atendendo e quero testar grátis o plano Equipe.">Quero testar grátis</a>
+        <p class="fina">14 dias grátis antes de decidir</p>
       </div>
     </div>
+
+    <p class="fora-faixa rv" style="--d:.24s">Mais de cinco profissionais, ou negócio que não é salão nem barbearia? Me chama que a gente monta sob medida.</p>
 
     <p class="rodape-planos rv" style="--d:.25s">Implantação feita por mim em todos os planos · Pix ou cartão · prazo e condições combinados na conversa</p>
   </div>
@@ -1158,22 +1164,20 @@
    ───────────────────────────────────────────────────────────── */
 const CONFIG = {
   whatsapp : "5587991465946",     // DDI + DDD + numero, so digitos
-  instagram: "gefftrader_",       // sem o @
+  instagram: "_gefftrader",       // sem o @ (o underscore vem na frente)
   mensagem : "Oi Geff, vi o site e queria entender como o sistema funciona pro meu negócio.",
 
-  // Preco mensal de cada plano, por prazo. Vazio mostra "Sob consulta" e a
-  // chave 6/12 meses fica escondida (ela volta sozinha quando um preco entrar).
-  // Dica: pode ancorar so o Essencial, ex. { seis: "a partir de R$ 149", doze: "" }.
-  // Ex: essencial: { seis: "R$ 149", doze: "R$ 129" }
+  // Preco de cada plano nas duas formas de pagamento. O modelo e valor
+  // fechado, dividido em 12x no cartao, ou a vista com 10% de desconto.
+  // Vazio nos dois mostra "Sob consulta" e esconde a chave de pagamento.
   precos: {
-    essencial: { seis: "", doze: "" },
-    completo : { seis: "", doze: "" },
-    multi    : { seis: "", doze: "" }
+    solo:   { parcelado: "12x R$ 400", avista: "R$ 4.320" },
+    dupla:  { parcelado: "12x R$ 600", avista: "R$ 6.480" },
+    equipe: { parcelado: "12x R$ 750", avista: "R$ 8.100" }
   },
 
-  // Frase que aparece quando o visitante escolhe 12 meses. Vazio esconde.
-  // Ex: "Economize 2 meses no plano de 12 meses"
-  economia: "",
+  // Frase que aparece quando o visitante escolhe a vista. Vazio esconde.
+  economia: "10% de desconto pagando à vista",
 
   // Depoimentos. Lista vazia = secao nao aparece no site.
   // Ex: { texto: "...", nome: "Viviane", negocio: "Vi Studio, Petrolina" }
@@ -1195,35 +1199,34 @@ document.querySelectorAll("[data-ig]").forEach(function (a) {
   a.href = "https://instagram.com/" + CONFIG.instagram; a.target = "_blank"; a.rel = "noopener";
 });
 
-/* ── precos e a chave de 6 ou 12 meses ── */
-let prazo = "seis";
+/* ── precos e a chave de forma de pagamento ── */
+let forma = "parcelado";
 
 function pintarPrecos() {
   // Sem nenhum preco preenchido, uma chave que nao muda nada so gera desconfianca.
   const temPreco = Object.keys(CONFIG.precos).some(function (k) {
-    return CONFIG.precos[k].seis || CONFIG.precos[k].doze;
+    return CONFIG.precos[k].parcelado || CONFIG.precos[k].avista;
   });
   document.querySelector(".chave").style.display = temPreco ? "" : "none";
-  // O rodape so fala em prazo quando existe prazo na tela.
   document.querySelector(".rodape-planos").textContent = temPreco
-    ? "Implantação feita por mim em todos os planos · Pix ou cartão · sem fidelidade além do prazo escolhido"
+    ? "Implantação feita por mim em todos os planos · Um ano de suporte, com ajuste todo mês · Taxa do cartão é por minha conta"
     : "Implantação feita por mim em todos os planos · Pix ou cartão · prazo e condições combinados na conversa";
-  const meses = prazo === "seis" ? "6 meses" : "12 meses";
+  const nota = forma === "parcelado" ? "no cartão, taxa por minha conta" : "à vista, no Pix ou no cartão";
   document.querySelectorAll("[data-preco]").forEach(function (el) {
-    const valor = (CONFIG.precos[el.dataset.preco] || {})[prazo];
+    const valor = (CONFIG.precos[el.dataset.preco] || {})[forma];
     el.innerHTML = valor
-      ? valor + "<small>por mês, no plano de " + meses + "</small>"
+      ? valor + "<small>" + nota + "</small>"
       : "Sob consulta<small>Definido na conversa, pelo seu atendimento</small>";
   });
   const eco = document.getElementById("economia");
-  eco.textContent = prazo === "doze" ? (CONFIG.economia || "") : "";
+  eco.textContent = forma === "avista" ? (CONFIG.economia || "") : "";
 }
 
-document.querySelectorAll("[data-prazo]").forEach(function (b) {
+document.querySelectorAll("[data-forma]").forEach(function (b) {
   b.addEventListener("click", function () {
-    document.querySelectorAll("[data-prazo]").forEach(function (x) { x.classList.remove("on"); });
+    document.querySelectorAll("[data-forma]").forEach(function (x) { x.classList.remove("on"); });
     b.classList.add("on");
-    prazo = b.dataset.prazo;
+    forma = b.dataset.forma;
     pintarPrecos();
   });
 });
