@@ -65,6 +65,10 @@
   h2{font-size:clamp(27px,3.4vw,42px)}
   h3{font-size:19px;line-height:1.32;letter-spacing:-.015em}
   .thin{font-weight:300}
+  /* "perder" em bordo: no design-guide essa cor significa perda e cliente
+     que vai embora. Peso um degrau acima do thin pra a palavra pesar sem
+     competir com o resto da manchete. */
+  .perda{color:var(--bordo);font-weight:500}
   .lead{font-size:clamp(17px,1.7vw,20px);max-width:56ch;color:var(--slate)}
   .eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:var(--green-deep);margin-bottom:16px}
   /* pilares do hero: a promessa inteira em quatro pastilhas */
@@ -717,7 +721,7 @@
         <span class="ph"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg><b class="lg">Caixa fechado no app</b><b class="sm">Caixa no app</b></span>
         <span class="ph auto"><svg viewBox="0 0 24 24"><use href="#i-energia"/></svg><b class="lg">Tudo automático</b><b class="sm">Automático</b></span>
       </div>
-      <h1 class="rv" style="--d:.05s"><span class="thin">Pare de perder clientes</span> por demora no WhatsApp.</h1>
+      <h1 class="rv" style="--d:.05s"><span class="thin">Pare de <span class="perda">perder</span> clientes</span> por demora no WhatsApp.</h1>
       <p class="lead rv" style="--d:.1s">A Aly responde o seu WhatsApp na hora, marca o horário na agenda e lança o atendimento no caixa. <b>Três funções numa contratação só.</b> Você acompanha tudo num painel no celular.</p>
       <div class="cta-row rv" style="--d:.15s">
         <a class="btn verde" href="#contato" data-wa="Oi Geff, vi o site. Quero testar a Aly grátis no meu atendimento."><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Quero testar grátis</a>
