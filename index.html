@@ -1235,7 +1235,22 @@ document.querySelectorAll("[data-ig]").forEach(function (a) {
 
 /* ── troca de cena do hero: studio ou barbearia ──
    A mesma atendente com o nome de cada casa: Aly no studio, Téo na
-   barbearia (a versão masculina, que o dono escolhe na configuração). */
+   barbearia (a versão masculina, que o dono escolhe na configuração).
+
+   O texto de cada mensagem entra como HTML, então o <b> do cartão de
+   confirmação vira negrito de verdade, do jeito que o WhatsApp mostra.
+   Tudo aqui é escrito à mão neste arquivo, nada vem de fora. */
+
+/* Amanhã por extenso, calculado na hora: "Terça, 18/08".
+   Data escrita fixa envelheceria e a demo passaria a mostrar dia errado. */
+function amanhaPorExtenso() {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  const dia = new Intl.DateTimeFormat("pt-BR", { weekday: "long" }).format(d).replace("-feira", "");
+  const data = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit" }).format(d);
+  return dia.charAt(0).toUpperCase() + dia.slice(1) + ", " + data;
+}
+
 const CONVERSAS = {
   studio: { nome: "Aly", msgs: [
     { de: "deles", txt: "Oi, Aly... Mulher preciso urgente marcar minha sobrancelha pra amanhã. Tem que horário?", h: "23:47" },
@@ -1247,11 +1262,15 @@ const CONVERSAS = {
   ]},
   barbearia: { nome: "Téo", msgs: [
     { de: "deles", txt: "Boa noite! Consigo cortar amanhã cedo, antes do trabalho?", h: "22:31" },
-    { de: "dela",  txt: "Opa, boa noite! 👊 Tenho 7h30 ou 8h15, qual fica melhor?", h: "22:31" },
-    { de: "deles", txt: "7h30", h: "22:32" },
-    { de: "dela",  txt: "Fechado! Corte amanhã às 7h30, R$ 35. Qual teu nome?", h: "22:32" },
-    { de: "deles", txt: "Marcos", h: "22:32" },
-    { de: "dela",  txt: "Tmj, Marcos 👊 Cadeira reservada, te espero às 7h30.", h: "22:33" }
+    { de: "dela",  txt: "Opa, boa noite! 💈 Tenho 07:00 ou 09:00, qual fica melhor?", h: "22:31" },
+    { de: "deles", txt: "09:00 pra mim", h: "22:32" },
+    { de: "dela",  txt: "Fechado! Corte sai R$ 35 ✂️ Qual teu nome?", h: "22:32" },
+    { de: "deles", txt: "Fernandinho", h: "22:32" },
+    { de: "dela",  txt: "Perfeito, Fernandinho! Amanhã temos:<br><br>"
+                      + "📅 <b>" + amanhaPorExtenso() + "</b><br>"
+                      + "🕐 <b>09:00</b><br>"
+                      + "✂️ <b>Corte</b><br><br>"
+                      + "Fica firme? 🤝🏼", h: "22:33" }
   ]}
 };
 document.querySelectorAll(".alterna button").forEach(function (b) {
