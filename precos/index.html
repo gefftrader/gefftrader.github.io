@@ -96,15 +96,11 @@
   }
   .titulo-secao h2{font-size:clamp(22px,3.2vw,29px)}
   .titulo-secao p{margin:10px auto 0;max-width:52ch;font-size:15.5px}
-  .citacao{max-width:min(600px,92%);margin:0 auto}
-  .citacao p{
-    font-size:clamp(24px,3.6vw,33px);font-weight:700;color:var(--ink);
-    letter-spacing:-.03em;line-height:1.2;max-width:none;margin:0;text-wrap:balance;
+  .tese{
+    font-size:clamp(21px,2.9vw,28px);font-weight:700;color:var(--ink);
+    letter-spacing:-.03em;line-height:1.25;max-width:min(520px,94%);margin:0 auto;
   }
-  .citacao cite{
-    display:block;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--green-deep);margin-top:14px;
-  }
+  @media(max-width:520px){.tese br{display:none}}
 
 
   /* ── chave de pagamento ── */
@@ -395,11 +391,8 @@
   <section class="painel" id="p-pag" role="tabpanel" aria-labelledby="t-pag" hidden>
     <div class="titulo-secao">
       <span class="olho">Sem letra miúda</span>
-      <blockquote class="citacao">
-        <p>Preço é o que você paga. Valor é o que você leva.</p>
-        <cite>Warren Buffett</cite>
-      </blockquote>
-      <p>O que você leva daqui é tranquilidade pra tocar o negócio e espaço pra ele crescer.</p>
+      <h2 class="tese">Você já paga por isso hoje.<br>Paga com o seu tempo.</h2>
+      <p>Aqui essa conta vira noite dormida, sábado livre e cabeça sobrando pra fazer o negócio crescer.</p>
     </div>
 
     <p class="dica">Toque em cada forma pra ver como funciona.</p>
