@@ -165,6 +165,32 @@
   .linha span{font-size:15px}
   @media(max-width:620px){.linha{flex-direction:column;gap:5px}.linha b{width:auto}}
 
+  /* ── sanfona: nada aparece ate ele tocar. E ele quem conduz. ── */
+  .dica{text-align:center;font-size:13.5px;color:var(--slate-soft);margin-bottom:16px}
+  .acordeao{display:flex;flex-direction:column;gap:12px;max-width:680px;margin:0 auto}
+  .ac-item{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--sombra);overflow:hidden;transition:box-shadow .2s ease}
+  .ac-item:has(.ac-cab[aria-expanded="true"]){box-shadow:var(--sombra-alta);border-color:color-mix(in srgb,var(--green) 40%,var(--line))}
+  .ac-cab{
+    width:100%;display:flex;align-items:center;gap:14px;cursor:pointer;
+    background:none;border:0;font:inherit;text-align:left;padding:22px 24px;
+    transition:background .16s ease;
+  }
+  .ac-cab:hover{background:var(--card-2)}
+  .ac-nome{font-size:19px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+  .ac-resumo{font-size:13.5px;color:var(--slate-soft);margin-left:auto;text-align:right}
+  .ac-seta{width:22px;height:22px;flex:none;stroke:var(--green-deep);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .24s ease}
+  .ac-cab[aria-expanded="true"] .ac-seta{transform:rotate(180deg)}
+  .ac-corpo{padding:0 24px 24px;animation:entra .28s cubic-bezier(.2,.7,.3,1)}
+  .ac-corpo p{font-size:15.5px;line-height:1.6}
+  .ac-corpo b{color:var(--ink);font-weight:600}
+  @media(max-width:520px){
+    .ac-cab{padding:18px 18px;gap:10px;flex-wrap:wrap}
+    .ac-nome{font-size:17px}
+    .ac-resumo{margin-left:0;width:100%;text-align:left;order:3}
+    .ac-seta{margin-left:auto}
+    .ac-corpo{padding:0 18px 20px}
+  }
+
   .card.pag{text-align:center;justify-content:flex-start}
   .card.pag h3{font-size:20px;margin-bottom:12px}
   .card.pag p{font-size:15px;line-height:1.6}
@@ -363,21 +389,41 @@
       <p>Não é mensalidade que não acaba. Você contrata o sistema, ele é seu, e durante o primeiro ano inteiro ele continua recebendo melhorias.</p>
     </div>
 
-    <div class="cards tres">
-      <article class="card pag destaque">
-        <h3>No cartão</h3>
-        <p>Em <b>12 vezes</b>, e a taxa do cartão é por minha conta. Você paga a parcela cheia, sem acréscimo nenhum.</p>
-      </article>
+    <p class="dica">Toque em cada forma pra ver como funciona.</p>
 
-      <article class="card pag">
-        <h3>À vista</h3>
-        <p><b>10% de desconto</b> no valor total, pagando no Pix ou no cartão.</p>
-      </article>
+    <div class="acordeao">
+      <div class="ac-item">
+        <button class="ac-cab" type="button" aria-expanded="false" aria-controls="ac-cartao" data-ac="cartao">
+          <span class="ac-nome">No cartão</span>
+          <span class="ac-resumo">12x sem acréscimo</span>
+          <svg class="ac-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="ac-corpo" id="ac-cartao" hidden>
+          <p>Em <b>12 vezes</b>, e a taxa do cartão é por minha conta. Você paga a parcela cheia, sem acréscimo nenhum.</p>
+        </div>
+      </div>
 
-      <article class="card pag">
-        <h3>Direto comigo</h3>
-        <p>Você assina uma <b>nota promissória</b>, paga a taxa de implantação na entrada e o resto em parcelas fixas. Pra quem prefere não usar o limite do cartão.</p>
-      </article>
+      <div class="ac-item">
+        <button class="ac-cab" type="button" aria-expanded="false" aria-controls="ac-avista" data-ac="avista">
+          <span class="ac-nome">À vista</span>
+          <span class="ac-resumo">10% de desconto</span>
+          <svg class="ac-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="ac-corpo" id="ac-avista" hidden>
+          <p><b>10% de desconto</b> no valor total, pagando no Pix ou no cartão.</p>
+        </div>
+      </div>
+
+      <div class="ac-item">
+        <button class="ac-cab" type="button" aria-expanded="false" aria-controls="ac-direto" data-ac="direto">
+          <span class="ac-nome">Direto comigo</span>
+          <span class="ac-resumo">sem usar o cartão</span>
+          <svg class="ac-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="ac-corpo" id="ac-direto" hidden>
+          <p>Você assina uma <b>nota promissória</b>, paga a taxa de implantação na entrada e o resto em parcelas fixas. Pra quem prefere não usar o limite do cartão.</p>
+        </div>
+      </div>
     </div>
 
     <div class="fecho-pag">
@@ -426,6 +472,22 @@
   /* abre direto na aba do link compartilhado */
   var inicial = (location.hash || "").replace("#","");
   if (inicial && document.getElementById("p-" + inicial)) abrir(inicial, false);
+
+  /* ── sanfona do pagamento: uma aberta por vez ── */
+  var acs = document.querySelectorAll("[data-ac]");
+  acs.forEach(function(b){
+    b.addEventListener("click", function(){
+      var abrindo = b.getAttribute("aria-expanded") !== "true";
+      acs.forEach(function(o){
+        o.setAttribute("aria-expanded","false");
+        document.getElementById(o.getAttribute("aria-controls")).hidden = true;
+      });
+      if (abrindo){
+        b.setAttribute("aria-expanded","true");
+        document.getElementById(b.getAttribute("aria-controls")).hidden = false;
+      }
+    });
+  });
 
   /* ── preços ── */
   var PRECOS = {
