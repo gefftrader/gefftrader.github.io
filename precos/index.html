@@ -96,6 +96,16 @@
   }
   .titulo-secao h2{font-size:clamp(22px,3.2vw,29px)}
   .titulo-secao p{margin:10px auto 0;max-width:52ch;font-size:15.5px}
+  .citacao{max-width:min(600px,92%);margin:0 auto}
+  .citacao p{
+    font-size:clamp(24px,3.6vw,33px);font-weight:700;color:var(--ink);
+    letter-spacing:-.03em;line-height:1.2;max-width:none;margin:0;text-wrap:balance;
+  }
+  .citacao cite{
+    display:block;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--green-deep);margin-top:14px;
+  }
+
 
   /* ── chave de pagamento ── */
   .chave{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;gap:3px;box-shadow:var(--sombra);margin:0 auto 24px;}
@@ -196,12 +206,12 @@
   .card.pag p{font-size:15px;line-height:1.6}
   .card.pag b{color:var(--ink);font-weight:600}
   .fecho-pag{
-    background:var(--card);border:1px solid var(--line);border-left:4px solid var(--green);
-    border-radius:20px;padding:28px 30px;margin-top:22px;box-shadow:var(--sombra);
-    max-width:760px;margin-left:auto;margin-right:auto;
+    background:var(--card);border:1px solid var(--line);border-top:4px solid var(--green);
+    border-radius:20px;padding:28px 30px;margin:26px auto 0;box-shadow:var(--sombra);
+    max-width:680px;text-align:center;
   }
-  .fecho-pag h3{font-size:20px;margin-bottom:10px}
-  .fecho-pag p{font-size:15.5px;margin:0}
+  .fecho-pag h3{font-size:22px;margin-bottom:8px}
+  .fecho-pag p{font-size:16.5px;margin:0}
 
   .divisor{display:flex;align-items:center;justify-content:center;gap:14px;padding:40px 0 0}
   .divisor::before,.divisor::after{content:"";height:1px;width:min(70px,16vw);background:var(--faisca-suave)}
@@ -385,8 +395,11 @@
   <section class="painel" id="p-pag" role="tabpanel" aria-labelledby="t-pag" hidden>
     <div class="titulo-secao">
       <span class="olho">Sem letra miúda</span>
-      <h2>Você paga uma vez, dividido em doze</h2>
-      <p>Não é mensalidade que não acaba. Você contrata o sistema, ele é seu, e durante o primeiro ano inteiro ele continua recebendo melhorias.</p>
+      <blockquote class="citacao">
+        <p>Preço é o que você paga. Valor é o que você leva.</p>
+        <cite>Warren Buffett</cite>
+      </blockquote>
+      <p>O que você leva daqui é tranquilidade pra tocar o negócio e espaço pra ele crescer.</p>
     </div>
 
     <p class="dica">Toque em cada forma pra ver como funciona.</p>
@@ -395,11 +408,11 @@
       <div class="ac-item">
         <button class="ac-cab" type="button" aria-expanded="false" aria-controls="ac-cartao" data-ac="cartao">
           <span class="ac-nome">No cartão</span>
-          <span class="ac-resumo">12x sem acréscimo</span>
+          <span class="ac-resumo">12x sem juros</span>
           <svg class="ac-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="ac-corpo" id="ac-cartao" hidden>
-          <p>Em <b>12 vezes</b>, e a taxa do cartão é por minha conta. Você paga a parcela cheia, sem acréscimo nenhum.</p>
+          <p><b>12x sem juros.</b> A taxa do cartão fica comigo.</p>
         </div>
       </div>
 
@@ -421,14 +434,14 @@
           <svg class="ac-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="ac-corpo" id="ac-direto" hidden>
-          <p>Você assina uma <b>nota promissória</b>, paga a taxa de implantação na entrada e o resto em parcelas fixas. Pra quem prefere não usar o limite do cartão.</p>
+          <p><b>Sinal de R$ 1.500</b> pela implantação e o resto em parcelas fixas, com nota promissória assinada.</p>
         </div>
       </div>
     </div>
 
     <div class="fecho-pag">
-      <h3>Você decide vendo funcionando</h3>
-      <p>O sistema já roda todo dia em negócios aqui da região. Nos 14 dias de teste ele entra no ar com os seus serviços e os seus horários, e você acompanha tudo pelo painel. Quando chegar a hora de decidir, você vai ter número na mão, não achismo.</p>
+      <h3>14 dias grátis antes de qualquer coisa</h3>
+      <p>Se não servir pro seu negócio, você não paga nada.</p>
     </div>
   </section>
 
