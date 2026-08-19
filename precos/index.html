@@ -75,10 +75,13 @@
     transition:transform .16s ease,background .16s ease,color .16s ease,border-color .16s ease;
   }
   .abas button:hover{transform:translateY(-1px);border-color:var(--slate-soft)}
+  /* o selecionado acende: verde da marca com halo em volta */
   .abas button[aria-selected="true"]{
-    background:var(--ink);border-color:var(--ink);color:#fff;font-weight:700;
-    box-shadow:0 4px 10px rgba(7,11,43,.16),0 14px 30px rgba(7,11,43,.16);
+    background:linear-gradient(180deg,#31E273 0%,var(--green-deep) 100%);
+    border-color:var(--green-deep);color:#fff;font-weight:700;
+    box-shadow:0 3px 8px rgba(10,127,57,.3),0 12px 26px rgba(10,127,57,.22),0 0 0 4px rgba(31,219,98,.18);
   }
+  .abas button[aria-selected="true"]:hover{transform:none}
   @media(max-width:560px){.abas button{padding:10px 15px;font-size:13px}}
 
   /* ── painel ── */
@@ -173,14 +176,33 @@
   /* ── sanfona: nada aparece ate ele tocar. E ele quem conduz. ── */
   .dica{text-align:center;font-size:13.5px;color:var(--slate-soft);margin-bottom:16px}
   /* valores de todos os planos do produto, dentro da forma de pagamento */
+  /* citacao: recuada e com filete verde, pra ler como voz de fora */
+  .citacao{max-width:min(500px,94%);margin:22px auto 0;padding:2px 0 2px 20px;
+    border-left:3px solid var(--faisca-suave);text-align:left}
+  .citacao blockquote{margin:0;font-size:17px;line-height:1.45;color:var(--ink);font-weight:500;letter-spacing:-.01em}
+  .citacao figcaption{margin-top:8px;font-size:12.5px;font-weight:600;color:var(--slate-soft)}
+  .citacao figcaption i{font-style:italic}
+
   .val-tabela{display:flex;flex-direction:column;margin-top:14px;border-top:1px solid var(--line)}
   .val-l{display:flex;align-items:baseline;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
   .val-l:last-child{border-bottom:0;padding-bottom:0}
   .val-l span{font-size:14.5px;color:var(--slate)}
   .val-l b{margin-left:auto;font-size:17px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
   .val-l em{font-style:normal;font-size:12.5px;color:var(--slate-soft);white-space:nowrap;min-width:98px;text-align:right}
+  /* a vista: valor cheio riscado, o com desconto em verde e o ganho em pilula */
+  .val-l s{margin-left:auto;font-size:14.5px;color:var(--slate-soft);text-decoration-thickness:1.5px}
+  .val-l.avista b{margin-left:0;color:var(--green-txt)}
+  .val-l .eco{
+    font-style:normal;background:var(--mint);color:var(--green-txt);border-radius:999px;
+    padding:5px 12px;font-size:12.5px;font-weight:700;min-width:0;text-align:center;white-space:nowrap;
+  }
+  .nota-teste{text-align:center;font-size:14px;color:var(--slate-soft);max-width:46ch;margin:26px auto 0}
+
   @media(max-width:520px){
     .val-l{flex-wrap:wrap;gap:4px 10px}
+    .val-l s{margin-left:0;order:2}
+    .val-l.avista b{order:3;margin-left:auto}
+    .val-l .eco{order:4;width:100%;text-align:left}
     .val-l b{margin-left:auto}
     .val-l em{width:100%;text-align:left;min-width:0}
   }
@@ -404,7 +426,11 @@
     <div class="titulo-secao">
       <span class="olho">Sem letra miúda</span>
       <h2 class="tese">Todo negócio grande já foi um dono que decidiu se organizar.</h2>
-      <p>Essa decisão aparece todo dia: no tempo que sobra, no cliente bem atendido e no negócio pronto pra crescer.</p>
+      <figure class="citacao">
+        <blockquote>O sistema toca o negócio. As pessoas tocam o sistema.</blockquote>
+        <figcaption>Michael Gerber, <i>O Mito do Empreendedor</i></figcaption>
+      </figure>
+      <p>Aqui isso aparece todo dia: no tempo que sobra, no cliente bem atendido e no negócio pronto pra crescer.</p>
     </div>
 
     <div class="acordeao">
@@ -436,10 +462,7 @@
       </div>
     </div>
 
-    <div class="fecho-pag">
-      <h3>14 dias grátis antes de qualquer coisa</h3>
-      <p>Se não servir pro seu negócio, você não paga nada.</p>
-    </div>
+    <p class="nota-teste">Tem teste de 14 dias grátis, combinado na conversa depois que eu entender o seu negócio.</p>
   </section>
 
   <div class="divisor" aria-hidden="true"><i></i></div>
@@ -524,7 +547,15 @@
 
     document.getElementById("ac-avista").innerHTML =
       '<p><b>10% de desconto</b> no valor total, pagando no Pix ou no cartão.</p>' +
-      tabela(lista.map(function(p){ return [p.nome, reais(p.avista), "economiza " + reais(p.parcela*12 - p.avista)]; }));
+      '<div class="val-tabela">' + lista.map(function(p){
+        var total = p.parcela * 12;
+        return '<div class="val-l avista">' +
+          '<span>' + p.nome + '</span>' +
+          '<s>' + reais(total) + '</s>' +
+          '<b>' + reais(p.avista) + '</b>' +
+          '<em class="eco">economiza ' + reais(total - p.avista) + '</em>' +
+        '</div>';
+      }).join("") + '</div>';
 
     document.getElementById("ac-direto").innerHTML =
       '<p><b>Sinal de ' + reais(SINAL) + '</b> pela implantação e o resto em parcelas fixas, com nota promissória assinada.</p>' +
