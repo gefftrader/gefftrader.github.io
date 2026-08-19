@@ -110,7 +110,8 @@
        Ele mostra isso ao vivo, com o cliente do lado. Entao some o que so
        serve pra quem le sozinho: subtitulo, convite de WhatsApp e rodape.
        No celular continua tudo no lugar. */
-    body:has(#p-pag:not([hidden])) header{padding-top:clamp(14px,2vw,20px)}
+    body:has(#p-pag:not([hidden])){padding-bottom:0}
+    body:has(#p-pag:not([hidden])) header{padding-top:clamp(12px,1.6vw,18px)}
     body:has(#p-pag:not([hidden])) header p{display:none}
     body:has(#p-pag:not([hidden])) .selo{width:clamp(50px,4.4vw,58px);height:clamp(50px,4.4vw,58px);margin-bottom:9px}
     body:has(#p-pag:not([hidden])) .abas{margin-top:14px}
