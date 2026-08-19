@@ -72,29 +72,11 @@
   @keyframes gira{to{transform:rotate(360deg)}}
   @property --volta{syntax:'<angle>';initial-value:0deg;inherits:false}
   @keyframes volta{to{--volta:360deg}}
-  @keyframes pulso{0%,100%{opacity:.55}50%{opacity:1}}
+  /* selo grande e limpo: so o nome girando em volta do G */
   .selo{position:relative;display:block;width:clamp(78px,8.4vw,100px);height:clamp(78px,8.4vw,100px);
     margin:0 auto 13px;filter:drop-shadow(0 8px 20px rgba(7,11,43,.14))}
   .selo img{position:absolute;inset:0;width:100%;height:100%}
   .selo-anel{animation:gira 26s linear infinite}
-  /* halo verde parado, so pra assentar o neon no papel */
-  .selo::after{
-    content:"";position:absolute;inset:-16px;border-radius:50%;z-index:-1;
-    background:radial-gradient(circle,rgba(31,219,98,.30) 0%,rgba(31,219,98,0) 70%);
-    animation:pulso 3.6s ease-in-out infinite;
-  }
-  /* contorno neon girando por fora do selo */
-  .selo::before{
-    content:"";position:absolute;inset:-9px;border-radius:50%;padding:3px;
-    background:conic-gradient(from var(--volta),
-      rgba(31,219,98,0) 0deg,#31E273 34deg,#7CFFB4 66deg,#12B85A 104deg,rgba(31,219,98,0) 158deg,
-      rgba(31,219,98,0) 182deg,#31E273 216deg,#7CFFB4 248deg,#12B85A 286deg,rgba(31,219,98,0) 340deg);
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-    mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;mask-composite:exclude;
-    filter:drop-shadow(0 0 6px rgba(49,226,115,.95)) drop-shadow(0 0 16px rgba(49,226,115,.6));
-    animation:volta 4.4s linear infinite;
-  }
   header h1{font-size:clamp(24px,3.6vw,31px)}
   header p{font-size:clamp(14px,1.6vw,15.5px);margin:9px auto 0;max-width:46ch}
 
@@ -302,8 +284,23 @@
   }
 
   .acordeao{display:flex;flex-direction:column;gap:12px;max-width:680px;margin:0 auto}
-  .ac-item{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--sombra);overflow:hidden;transition:box-shadow .2s ease}
-  .ac-item:has(.ac-cab[aria-expanded="true"]){box-shadow:var(--sombra-alta);border-color:color-mix(in srgb,var(--green) 40%,var(--line))}
+  .ac-item{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    box-shadow:var(--sombra);overflow:hidden;transition:box-shadow .2s ease}
+  /* o card aberto ganha contorno neon girando. E o unico aceso da tela,
+     entao o cliente sabe na hora de qual condicao voce esta falando. */
+  .ac-item::before{
+    content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;
+    z-index:2;pointer-events:none;opacity:0;transition:opacity .3s ease;
+    background:conic-gradient(from var(--volta),
+      rgba(31,219,98,0) 0deg,#31E273 30deg,#7CFFB4 62deg,#12B85A 98deg,rgba(31,219,98,0) 152deg,
+      rgba(31,219,98,0) 180deg,#31E273 210deg,#7CFFB4 242deg,#12B85A 278deg,rgba(31,219,98,0) 332deg);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+  }
+  .ac-item:has(.ac-cab[aria-expanded="true"]){box-shadow:var(--sombra-alta),0 0 0 1px rgba(18,184,90,.16),0 0 26px rgba(31,219,98,.28);
+    border-color:color-mix(in srgb,var(--green) 40%,var(--line))}
+  .ac-item:has(.ac-cab[aria-expanded="true"])::before{opacity:1;animation:volta 4.2s linear infinite}
   .ac-cab{
     width:100%;display:flex;align-items:center;gap:14px;cursor:pointer;
     background:none;border:0;font:inherit;text-align:left;padding:22px 24px;
