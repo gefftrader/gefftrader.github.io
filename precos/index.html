@@ -73,7 +73,7 @@
   @property --volta{syntax:'<angle>';initial-value:0deg;inherits:false}
   @keyframes volta{to{--volta:360deg}}
   /* selo grande e limpo: so o nome girando em volta do G */
-  .selo{position:relative;display:block;width:clamp(78px,8.4vw,100px);height:clamp(78px,8.4vw,100px);
+  .selo{position:relative;display:block;width:clamp(88px,9.6vw,116px);height:clamp(88px,9.6vw,116px);
     margin:0 auto 13px;filter:drop-shadow(0 8px 20px rgba(7,11,43,.14))}
   .selo img{position:absolute;inset:0;width:100%;height:100%}
   .selo-anel{animation:gira 26s linear infinite}
@@ -109,7 +109,7 @@
       column-gap:clamp(30px,3.5vw,50px);row-gap:22px;
     }
     .pag-esq{grid-column:1;grid-row:1}
-    .pag-dir{grid-column:2;grid-row:1 / span 2}
+    .pag-dir{grid-column:2;grid-row:1 / span 2;margin-top:26px}
     #p-pag .titulo-secao{text-align:left;margin-bottom:0}
     #p-pag .tese{margin:0;max-width:none}
     #p-pag .citacao{margin-left:0;margin-right:0;max-width:none}
@@ -125,11 +125,12 @@
        serve pra quem le sozinho: subtitulo, convite de WhatsApp e rodape.
        No celular continua tudo no lugar. */
     body:has(#p-pag:not([hidden])){padding-bottom:0}
-    body:has(#p-pag:not([hidden])) header{padding-top:clamp(12px,1.6vw,18px)}
+    body:has(#p-pag:not([hidden])) header{padding-top:clamp(8px,1vw,12px)}
+    body:has(#p-pag:not([hidden])) h1{font-size:clamp(21px,2.7vw,26px)}
     body:has(#p-pag:not([hidden])) header p{display:none}
-    body:has(#p-pag:not([hidden])) .selo{width:clamp(70px,6.6vw,86px);height:clamp(70px,6.6vw,86px);margin-bottom:10px}
-    body:has(#p-pag:not([hidden])) .abas{margin-top:14px}
-    #p-pag{padding-top:10px}
+    body:has(#p-pag:not([hidden])) .selo{width:clamp(80px,7.6vw,98px);height:clamp(80px,7.6vw,98px);margin-bottom:6px}
+    body:has(#p-pag:not([hidden])) .abas{margin-top:10px}
+    #p-pag{padding-top:4px}
     #p-pag:not([hidden]) ~ .divisor,
     #p-pag:not([hidden]) ~ .fecho,
     #p-pag:not([hidden]) ~ footer{display:none}
@@ -256,6 +257,23 @@
     padding:6px 13px;font-size:13px;font-weight:700;min-width:0;text-align:center;white-space:nowrap;
     box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 3px 9px rgba(10,127,57,.14);
   }
+  /* o presente: so entra em cena quando ele toca no selo, e ai chega com
+     cara de surpresa. Depois ele decide se abre ou nao. */
+  @keyframes surpresa{
+    0%{opacity:0;transform:scale(.72) translateY(16px) rotate(-4deg)}
+    55%{opacity:1;transform:scale(1.06) translateY(0) rotate(1.6deg)}
+    76%{transform:scale(.975) rotate(-1.2deg)}
+    100%{opacity:1;transform:scale(1) rotate(0)}
+  }
+  @keyframes chacoalha{
+    0%,100%{transform:rotate(0)}
+    14%{transform:rotate(-15deg)}30%{transform:rotate(13deg)}
+    46%{transform:rotate(-10deg)}62%{transform:rotate(7deg)}78%{transform:rotate(-3deg)}
+  }
+  @keyframes onda{from{box-shadow:0 0 0 0 rgba(31,219,98,.5)}to{box-shadow:0 0 0 24px rgba(31,219,98,0)}}
+  .presente[hidden]{display:none}
+  .presente.chega{animation:surpresa .6s cubic-bezier(.24,.9,.32,1.25) both,onda .85s ease-out .18s}
+  .presente.chega .presente-cab > svg:first-child{animation:chacoalha .85s ease .38s}
   /* o presente: carta na manga que ele abre quando quiser */
   .presente{max-width:min(600px,94%);margin:12px auto 0;border-radius:20px;overflow:hidden;
     border:1px dashed #BFE3CD;background:var(--card-2);transition:border-color .22s ease,background .22s ease,box-shadow .22s ease}
@@ -284,6 +302,7 @@
   }
 
   .acordeao{display:flex;flex-direction:column;gap:12px;max-width:680px;margin:0 auto}
+  @media(min-width:940px){#p-pag .acordeao{gap:10px}#p-pag .ac-corpo{padding-bottom:16px}}
   .ac-item{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;
     box-shadow:var(--sombra);overflow:hidden;transition:box-shadow .2s ease}
   /* o card aberto ganha contorno neon girando. E o unico aceso da tela,
@@ -551,7 +570,7 @@
     </div>
       </div>
 
-      <div class="presente" id="presente">
+      <div class="presente" id="presente" hidden>
       <button class="presente-cab" type="button" aria-expanded="false" aria-controls="presente-corpo">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v9H4v-9"/><path d="M2 7.5h20V12H2z"/><path d="M12 21.5V7.5"/><path d="M12 7.5H7.6a2.55 2.55 0 0 1 0-5.1C11 2.4 12 7.5 12 7.5z"/><path d="M12 7.5h4.4a2.55 2.55 0 0 0 0-5.1C13 2.4 12 7.5 12 7.5z"/></svg>
         <span>Tem mais uma coisa pra você</span>
@@ -657,6 +676,30 @@
       '<p><b>Sinal de ' + reais(SINAL) + '</b> pela implantação e o resto em parcelas fixas, com nota promissória assinada.</p>' +
       tabela(lista.map(function(p){ return [p.nome, "12x " + reais(p.parcela - SINAL/12), "depois do sinal"]; }));
   }
+
+  /* ── o selo e o gatilho do presente. Um toque e ele entra na tela com
+        cara de surpresa. Outro toque e ele some e volta pro estado fechado,
+        pronto pro proximo cliente. ── */
+  (function(){
+    var selo = document.querySelector(".selo");
+    var presente = document.getElementById("presente");
+    if (!selo || !presente) return;
+    selo.addEventListener("click", function(){
+      if (presente.hasAttribute("hidden")){
+        presente.removeAttribute("hidden");
+        presente.classList.remove("chega");
+        void presente.offsetWidth;              /* reinicia a animacao */
+        presente.classList.add("chega");
+      } else {
+        presente.setAttribute("hidden","");
+        presente.classList.remove("chega");
+        var c = document.querySelector(".presente-cab");
+        c.setAttribute("aria-expanded","false");
+        document.getElementById("presente-corpo").hidden = true;
+        c.querySelector("span").textContent = "Tem mais uma coisa pra você";
+      }
+    });
+  })();
 
   /* ── o presente, aberto por ele na hora certa ── */
   (function(){
