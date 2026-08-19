@@ -172,6 +172,28 @@
 
   /* ── sanfona: nada aparece ate ele tocar. E ele quem conduz. ── */
   .dica{text-align:center;font-size:13.5px;color:var(--slate-soft);margin-bottom:16px}
+  .planos-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+  .planos-chips button{
+    font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:9px 17px;color:var(--slate);box-shadow:var(--sombra);
+    transition:background .16s ease,color .16s ease,border-color .16s ease;
+  }
+  .planos-chips button:hover{border-color:var(--slate-soft)}
+  .planos-chips button[aria-pressed="true"]{background:var(--green-deep);border-color:var(--green-deep);color:#fff;font-weight:700}
+  .plano-ativo{text-align:center;font-size:13.5px;color:var(--slate-soft);margin-bottom:18px}
+  .plano-ativo b{color:var(--ink);font-weight:600}
+
+  /* numeros dentro da sanfona */
+  .val-linha{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .val-forte{font-size:clamp(24px,3.2vw,30px);font-weight:800;color:var(--ink);letter-spacing:-.035em;font-variant-numeric:tabular-nums;line-height:1.15}
+  .val-obs{font-size:14px;color:var(--slate-soft)}
+  .val-eco{
+    display:inline-block;background:var(--mint);color:var(--green-txt);
+    border-radius:999px;padding:5px 13px;font-size:13.5px;font-weight:700;margin-top:4px;
+  }
+  .val-nota{font-size:14.5px;margin-top:10px}
+
   .acordeao{display:flex;flex-direction:column;gap:12px;max-width:680px;margin:0 auto}
   .ac-item{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--sombra);overflow:hidden;transition:box-shadow .2s ease}
   .ac-item:has(.ac-cab[aria-expanded="true"]){box-shadow:var(--sombra-alta);border-color:color-mix(in srgb,var(--green) 40%,var(--line))}
@@ -394,7 +416,8 @@
       <p>Essa decisão aparece todo dia: no tempo que sobra, no cliente bem atendido e no negócio pronto pra crescer.</p>
     </div>
 
-    <p class="dica">Toque em cada forma pra ver como funciona.</p>
+    <div class="planos-chips" id="planos-chips" role="group" aria-label="Escolha o plano"></div>
+    <p class="plano-ativo" id="plano-ativo"></p>
 
     <div class="acordeao">
       <div class="ac-item">
@@ -403,9 +426,7 @@
           <span class="ac-resumo">12x sem juros</span>
           <svg class="ac-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <div class="ac-corpo" id="ac-cartao" hidden>
-          <p><b>12x sem juros.</b> A taxa do cartão fica comigo.</p>
-        </div>
+        <div class="ac-corpo" id="ac-cartao" hidden></div>
       </div>
 
       <div class="ac-item">
@@ -414,9 +435,7 @@
           <span class="ac-resumo">10% de desconto</span>
           <svg class="ac-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <div class="ac-corpo" id="ac-avista" hidden>
-          <p><b>10% de desconto</b> no valor total, pagando no Pix ou no cartão.</p>
-        </div>
+        <div class="ac-corpo" id="ac-avista" hidden></div>
       </div>
 
       <div class="ac-item">
@@ -425,9 +444,7 @@
           <span class="ac-resumo">sem usar o cartão</span>
           <svg class="ac-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <div class="ac-corpo" id="ac-direto" hidden>
-          <p><b>Sinal de R$ 1.500</b> pela implantação e o resto em parcelas fixas, com nota promissória assinada.</p>
-        </div>
+        <div class="ac-corpo" id="ac-direto" hidden></div>
       </div>
     </div>
 
@@ -468,6 +485,7 @@
       painel.classList.toggle("on", alvo);
       painel.hidden = !alvo;
     });
+    if (PLANOS[id]) { produtoAtual = id; planoAtual = 0; pintarPagamento(); }
     if (history.replaceState) history.replaceState(null, "", "#" + id);
     if (focar) window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -477,6 +495,64 @@
   /* abre direto na aba do link compartilhado */
   var inicial = (location.hash || "").replace("#","");
   if (inicial && document.getElementById("p-" + inicial)) abrir(inicial, false);
+
+  /* ── planos por produto, com o calculo de cada forma de pagamento ──
+     O sinal de R$ 1.500 divide exato por 12 (R$ 125), entao a parcela do
+     "Direto comigo" e sempre a parcela normal menos 125. ── */
+  var SINAL = 1500;
+  var PLANOS = {
+    aly: [
+      { id:"uma",  nome:"Uma Cadeira",   quem:"1 profissional",       parcela:397, avista:4280 },
+      { id:"duas", nome:"Duas Cadeiras", quem:"2 profissionais",      parcela:597, avista:6440 },
+      { id:"casa", nome:"Casa Cheia",    quem:"3 a 5 profissionais",  parcela:747, avista:8060 }
+    ],
+    sob: [
+      { id:"sob",    nome:"Sistema",              quem:"sob medida",            parcela:300, avista:3240 },
+      { id:"sobsec", nome:"Sistema + secretária", quem:"você fala, ela lança",  parcela:400, avista:4320 }
+    ],
+    lan: [
+      { id:"lan1", nome:"Até 300 pedidos",   quem:"no mês", parcela:500, avista:5400 },
+      { id:"lan2", nome:"301 a 600 pedidos", quem:"no mês", parcela:700, avista:7560 }
+    ]
+  };
+  var ROTULO = { aly:"Aly, atendente", sob:"Sistema sob medida", lan:"Atendente de lanchonete" };
+  var produtoAtual = "aly", planoAtual = 0;
+
+  function reais(v){
+    return "R$ " + v.toLocaleString("pt-BR", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  }
+  function pintarPagamento(){
+    var lista = PLANOS[produtoAtual];
+    if (planoAtual >= lista.length) planoAtual = 0;
+    var pl = lista[planoAtual];
+    var total = pl.parcela * 12;
+    var economia = total - pl.avista;
+    var parcelaDireto = pl.parcela - SINAL / 12;
+
+    document.getElementById("planos-chips").innerHTML = lista.map(function(x, i){
+      return '<button type="button" data-plano="' + i + '" aria-pressed="' + (i === planoAtual) + '">' + x.nome + "</button>";
+    }).join("");
+    document.getElementById("plano-ativo").innerHTML =
+      ROTULO[produtoAtual] + " · <b>" + pl.nome + "</b>, " + pl.quem;
+
+    document.getElementById("ac-cartao").innerHTML =
+      '<div class="val-linha"><span class="val-forte">12x ' + reais(pl.parcela) + '</span><span class="val-obs">sem juros</span></div>' +
+      '<p class="val-nota">Total de ' + reais(total) + '. A taxa do cartão fica comigo, você paga a parcela cheia sem acréscimo.</p>';
+
+    document.getElementById("ac-avista").innerHTML =
+      '<div class="val-linha"><span class="val-forte">' + reais(pl.avista) + '</span><span class="val-obs">no Pix ou no cartão</span></div>' +
+      '<span class="val-eco">Você economiza ' + reais(economia) + '</span>' +
+      '<p class="val-nota">10% de desconto sobre o total de ' + reais(total) + '.</p>';
+
+    document.getElementById("ac-direto").innerHTML =
+      '<div class="val-linha"><span class="val-forte">' + reais(SINAL) + '</span><span class="val-obs">de sinal, pela implantação</span></div>' +
+      '<div class="val-linha"><span class="val-forte">12x ' + reais(parcelaDireto) + '</span><span class="val-obs">nas parcelas seguintes</span></div>' +
+      '<p class="val-nota">Você assina uma nota promissória no valor do saldo e paga em 12 parcelas fixas, sem passar no cartão.</p>';
+
+    document.querySelectorAll("[data-plano]").forEach(function(b){
+      b.addEventListener("click", function(){ planoAtual = Number(b.dataset.plano); pintarPagamento(); });
+    });
+  }
 
   /* ── sanfona do pagamento: uma aberta por vez ── */
   var acs = document.querySelectorAll("[data-ac]");
@@ -519,6 +595,7 @@
     b.addEventListener("click", function(){ forma = b.dataset.forma; pintar(); });
   });
   pintar();
+  pintarPagamento();
 </script>
 </body>
 </html>
