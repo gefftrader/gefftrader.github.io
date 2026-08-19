@@ -58,16 +58,16 @@
   h1,h2,h3{color:var(--ink);font-weight:700;letter-spacing:-.028em;line-height:1.15;text-wrap:balance}
 
   /* ── cabeçalho ── */
-  header{padding:clamp(28px,6vw,52px) 0 6px;text-align:center}
+  header{padding:clamp(22px,3.4vw,34px) 0 4px;text-align:center}
   @keyframes gira{to{transform:rotate(360deg)}}
-  .selo{position:relative;display:block;width:82px;height:82px;margin:0 auto 18px;filter:drop-shadow(0 8px 20px rgba(7,11,43,.14))}
+  .selo{position:relative;display:block;width:clamp(56px,6vw,70px);height:clamp(56px,6vw,70px);margin:0 auto 12px;filter:drop-shadow(0 8px 20px rgba(7,11,43,.14))}
   .selo img{position:absolute;inset:0;width:100%;height:100%}
   .selo-anel{animation:gira 26s linear infinite}
-  header h1{font-size:clamp(27px,4.6vw,38px)}
-  header p{font-size:clamp(15px,2vw,17px);margin:12px auto 0;max-width:44ch}
+  header h1{font-size:clamp(24px,3.6vw,31px)}
+  header p{font-size:clamp(14px,1.6vw,15.5px);margin:9px auto 0;max-width:46ch}
 
   /* ── abas ── */
-  .abas{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:26px 0 0}
+  .abas{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:18px 0 0}
   .abas button{
     font:inherit;font-size:14px;font-weight:600;cursor:pointer;
     background:var(--card);border:1px solid var(--line);border-radius:999px;
@@ -84,9 +84,45 @@
   .abas button[aria-selected="true"]:hover{transform:none}
   @media(max-width:560px){.abas button{padding:10px 15px;font-size:13px}}
 
+  /* ── duas colunas na aba de pagamento ──
+     Ele apresenta ao vivo e nao pode rolar a tela na hora do preco. Texto
+     de um lado, condicoes do outro, tudo numa telada so. ── */
+  .pag-grid{display:grid;gap:clamp(26px,3.5vw,50px);align-items:start}
+  @media(min-width:940px){
+    .pag-grid{
+      grid-template-columns:0.92fr 1.08fr;
+      grid-template-rows:auto auto;
+      column-gap:clamp(30px,3.5vw,50px);row-gap:22px;
+    }
+    .pag-esq{grid-column:1;grid-row:1}
+    .pag-dir{grid-column:2;grid-row:1 / span 2}
+    #p-pag .titulo-secao{text-align:left;margin-bottom:0}
+    #p-pag .tese{margin:0;max-width:none}
+    #p-pag .citacao{margin-left:0;margin-right:0;max-width:none}
+    #p-pag .acordeao{max-width:none;margin-left:0;margin-right:0}
+    /* o presente desce pro vazio da coluna esquerda: assim ele pode abrir
+       sem empurrar as condicoes de pagamento pra fora da tela */
+    #p-pag .presente{grid-column:1;grid-row:2;align-self:start;max-width:none;margin:0}
+    #p-pag .presente-corpo{text-align:left}
+    #p-pag .presente-corpo p{margin-left:0}
+
+    /* ── modo apresentacao: na aba de pagamento tudo cabe numa telada so ──
+       Ele mostra isso ao vivo, com o cliente do lado. Entao some o que so
+       serve pra quem le sozinho: subtitulo, convite de WhatsApp e rodape.
+       No celular continua tudo no lugar. */
+    body:has(#p-pag:not([hidden])) header{padding-top:clamp(14px,2vw,20px)}
+    body:has(#p-pag:not([hidden])) header p{display:none}
+    body:has(#p-pag:not([hidden])) .selo{width:clamp(50px,4.4vw,58px);height:clamp(50px,4.4vw,58px);margin-bottom:9px}
+    body:has(#p-pag:not([hidden])) .abas{margin-top:14px}
+    #p-pag{padding-top:10px}
+    #p-pag:not([hidden]) ~ .divisor,
+    #p-pag:not([hidden]) ~ .fecho,
+    #p-pag:not([hidden]) ~ footer{display:none}
+  }
+
   /* ── painel ── */
   @keyframes entra{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-  .painel{display:none;padding:34px 0 0}
+  .painel{display:none;padding:26px 0 0}
   .painel.on{display:block;animation:entra .34s cubic-bezier(.2,.7,.3,1)}
   .titulo-secao{text-align:center;margin-bottom:26px}
   .titulo-secao .olho{
@@ -197,7 +233,7 @@
     padding:5px 12px;font-size:12.5px;font-weight:700;min-width:0;text-align:center;white-space:nowrap;
   }
   /* o presente: carta na manga que ele abre quando quiser */
-  .presente{max-width:min(600px,94%);margin:44px auto 0;border-radius:20px;overflow:hidden;
+  .presente{max-width:min(600px,94%);margin:12px auto 0;border-radius:20px;overflow:hidden;
     border:1px dashed #BFE3CD;background:var(--card-2);transition:border-color .22s ease,background .22s ease,box-shadow .22s ease}
   .presente:has(.presente-cab[aria-expanded="true"]){
     border-style:solid;border-color:transparent;background:linear-gradient(160deg,var(--mint) 0%,#D8F2E2 100%);
@@ -432,6 +468,8 @@
 
   <!-- ═══ PAGAMENTO ═══ -->
   <section class="painel" id="p-pag" role="tabpanel" aria-labelledby="t-pag" hidden>
+    <div class="pag-grid">
+      <div class="pag-esq">
     <div class="titulo-secao">
       <span class="olho">Sem letra miúda</span>
       <h2 class="tese">Todo negócio grande, um dia já foi um negócio em que o dono decidiu se organizar.</h2>
@@ -440,6 +478,9 @@
         <figcaption>Michael Gerber, <i>O Mito do Empreendedor</i></figcaption>
       </figure>
     </div>
+      </div>
+      <div class="pag-dir">
+
 
     <div class="acordeao">
       <div class="ac-item">
@@ -469,8 +510,9 @@
         <div class="ac-corpo" id="ac-direto" hidden></div>
       </div>
     </div>
+      </div>
 
-    <div class="presente" id="presente">
+      <div class="presente" id="presente">
       <button class="presente-cab" type="button" aria-expanded="false" aria-controls="presente-corpo">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v9H4v-9"/><path d="M2 7.5h20V12H2z"/><path d="M12 21.5V7.5"/><path d="M12 7.5H7.6a2.55 2.55 0 0 1 0-5.1C11 2.4 12 7.5 12 7.5z"/><path d="M12 7.5h4.4a2.55 2.55 0 0 0 0-5.1C13 2.4 12 7.5 12 7.5z"/></svg>
         <span>Tem mais uma coisa pra você</span>
@@ -479,6 +521,7 @@
       <div class="presente-corpo" id="presente-corpo" hidden>
         <strong>14 dias grátis</strong>
         <p>A Aly entra no ar com os seus serviços e os seus horários, e você acompanha pelo painel. Se não servir pro seu negócio, você não paga nada.</p>
+      </div>
       </div>
     </div>
   </section>
@@ -521,10 +564,6 @@
   abas.forEach(function(b){
     b.addEventListener("click", function(){ abrir(b.dataset.aba, true); });
   });
-  /* abre direto na aba do link compartilhado */
-  var inicial = (location.hash || "").replace("#","");
-  if (inicial && document.getElementById("p-" + inicial)) abrir(inicial, false);
-
   /* ── planos por produto, com o calculo de cada forma de pagamento ──
      O sinal de R$ 1.500 divide exato por 12 (R$ 125), entao a parcela do
      "Direto comigo" e sempre a parcela normal menos 125. ── */
@@ -634,6 +673,11 @@
   });
   pintar();
   pintarPagamento();
+
+  /* Abre direto na aba do link compartilhado. Fica no fim de proposito:
+     precisa dos precos ja carregados pra nao quebrar em /precos#pag. */
+  var inicial = (location.hash || "").replace("#","");
+  if (inicial && document.getElementById("p-" + inicial)) abrir(inicial, false);
 </script>
 </body>
 </html>
