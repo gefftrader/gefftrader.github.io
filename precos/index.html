@@ -38,17 +38,27 @@
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   body{
     font-family:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
-    background:
-      radial-gradient(820px 820px at 50% -340px,rgba(31,219,98,.17),rgba(31,219,98,0) 66%),
-      linear-gradient(180deg,var(--paper) 0%,var(--paper-pe) 100%) no-repeat;
-    background-size:100% 100%;
+    background-color:var(--paper);
+    /* textura em tres camadas: luz verde no topo, malha de pontos e o papel */
+    background-image:
+      radial-gradient(820px 820px at 50% -340px,rgba(31,219,98,.19),rgba(31,219,98,0) 66%),
+      radial-gradient(560px 420px at 88% 24%,rgba(10,127,57,.07),rgba(10,127,57,0) 70%),
+      radial-gradient(circle,rgba(10,127,57,.10) 1px,rgba(10,127,57,0) 1.5px),
+      linear-gradient(180deg,var(--paper) 0%,var(--paper-pe) 100%);
+    background-size:100% 100%,100% 100%,26px 26px,100% 100%;
+    background-repeat:no-repeat,no-repeat,repeat,no-repeat;
     color:var(--slate);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased;
     min-height:100vh;padding-bottom:calc(40px + env(safe-area-inset-bottom));
   }
-  /* grão fino, o mesmo tratamento da página da bio */
+  /* grão por cima de tudo, o mesmo tratamento da página da bio */
   body::before{
-    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.085;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+  /* filete diagonal bem apagado, so pra tirar a chapa do fundo */
+  body::after{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.32;
+    background-image:repeating-linear-gradient(122deg,rgba(10,127,57,.04) 0 1px,rgba(10,127,57,0) 1px 14px);
   }
   img{max-width:100%;height:auto;display:block}
   a{color:inherit;text-decoration:none}
@@ -60,9 +70,31 @@
   /* ── cabeçalho ── */
   header{padding:clamp(22px,3.4vw,34px) 0 4px;text-align:center}
   @keyframes gira{to{transform:rotate(360deg)}}
-  .selo{position:relative;display:block;width:clamp(56px,6vw,70px);height:clamp(56px,6vw,70px);margin:0 auto 12px;filter:drop-shadow(0 8px 20px rgba(7,11,43,.14))}
+  @property --volta{syntax:'<angle>';initial-value:0deg;inherits:false}
+  @keyframes volta{to{--volta:360deg}}
+  @keyframes pulso{0%,100%{opacity:.55}50%{opacity:1}}
+  .selo{position:relative;display:block;width:clamp(78px,8.4vw,100px);height:clamp(78px,8.4vw,100px);
+    margin:0 auto 13px;filter:drop-shadow(0 8px 20px rgba(7,11,43,.14))}
   .selo img{position:absolute;inset:0;width:100%;height:100%}
   .selo-anel{animation:gira 26s linear infinite}
+  /* halo verde parado, so pra assentar o neon no papel */
+  .selo::after{
+    content:"";position:absolute;inset:-16px;border-radius:50%;z-index:-1;
+    background:radial-gradient(circle,rgba(31,219,98,.30) 0%,rgba(31,219,98,0) 70%);
+    animation:pulso 3.6s ease-in-out infinite;
+  }
+  /* contorno neon girando por fora do selo */
+  .selo::before{
+    content:"";position:absolute;inset:-9px;border-radius:50%;padding:3px;
+    background:conic-gradient(from var(--volta),
+      rgba(31,219,98,0) 0deg,#31E273 34deg,#7CFFB4 66deg,#12B85A 104deg,rgba(31,219,98,0) 158deg,
+      rgba(31,219,98,0) 182deg,#31E273 216deg,#7CFFB4 248deg,#12B85A 286deg,rgba(31,219,98,0) 340deg);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    filter:drop-shadow(0 0 6px rgba(49,226,115,.95)) drop-shadow(0 0 16px rgba(49,226,115,.6));
+    animation:volta 4.4s linear infinite;
+  }
   header h1{font-size:clamp(24px,3.6vw,31px)}
   header p{font-size:clamp(14px,1.6vw,15.5px);margin:9px auto 0;max-width:46ch}
 
@@ -113,7 +145,7 @@
     body:has(#p-pag:not([hidden])){padding-bottom:0}
     body:has(#p-pag:not([hidden])) header{padding-top:clamp(12px,1.6vw,18px)}
     body:has(#p-pag:not([hidden])) header p{display:none}
-    body:has(#p-pag:not([hidden])) .selo{width:clamp(50px,4.4vw,58px);height:clamp(50px,4.4vw,58px);margin-bottom:9px}
+    body:has(#p-pag:not([hidden])) .selo{width:clamp(70px,6.6vw,86px);height:clamp(70px,6.6vw,86px);margin-bottom:10px}
     body:has(#p-pag:not([hidden])) .abas{margin-top:14px}
     #p-pag{padding-top:10px}
     #p-pag:not([hidden]) ~ .divisor,
@@ -221,17 +253,26 @@
   .citacao figcaption i{font-style:italic}
 
   .val-tabela{display:flex;flex-direction:column;margin-top:14px;border-top:1px solid var(--line)}
-  .val-l{display:flex;align-items:baseline;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .val-l{display:flex;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
   .val-l:last-child{border-bottom:0;padding-bottom:0}
   .val-l span{font-size:14.5px;color:var(--slate)}
   .val-l b{margin-left:auto;font-size:17px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
   .val-l em{font-style:normal;font-size:12.5px;color:var(--slate-soft);white-space:nowrap;min-width:98px;text-align:right}
-  /* a vista: valor cheio riscado, o com desconto em verde e o ganho em pilula */
-  .val-l s{margin-left:auto;font-size:14.5px;color:var(--slate-soft);text-decoration-thickness:1.5px}
-  .val-l.avista b{margin-left:0;color:var(--green-txt)}
+  /* a vista: o valor cheio vem grande e riscado fino, o com desconto vem menor
+     mas no mesmo verde, e a economia e quem fecha a linha */
+  .val-l s{
+    margin-left:auto;font-size:clamp(19px,1.9vw,23px);font-weight:600;color:var(--ink);opacity:.42;
+    font-variant-numeric:tabular-nums;letter-spacing:-.02em;white-space:nowrap;
+    text-decoration-line:line-through;text-decoration-thickness:from-font;
+    text-decoration-color:rgba(7,11,43,.5);
+  }
+  @supports (text-decoration-thickness: 1px){.val-l s{text-decoration-thickness:1px}}
+  .val-l.avista b{margin-left:0;font-size:16px;color:var(--green-txt)}
   .val-l .eco{
-    font-style:normal;background:var(--mint);color:var(--green-txt);border-radius:999px;
-    padding:5px 12px;font-size:12.5px;font-weight:700;min-width:0;text-align:center;white-space:nowrap;
+    font-style:normal;background:linear-gradient(180deg,#DCF6E5 0%,var(--mint) 100%);
+    color:var(--green-txt);border:1px solid rgba(18,184,90,.28);border-radius:999px;
+    padding:6px 13px;font-size:13px;font-weight:700;min-width:0;text-align:center;white-space:nowrap;
+    box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 3px 9px rgba(10,127,57,.14);
   }
   /* o presente: carta na manga que ele abre quando quiser */
   .presente{max-width:min(600px,94%);margin:12px auto 0;border-radius:20px;overflow:hidden;
@@ -241,15 +282,15 @@
     box-shadow:0 4px 12px rgba(10,127,57,.12),0 20px 44px rgba(10,127,57,.14)}
   .presente-cab{
     width:100%;display:flex;align-items:center;gap:13px;cursor:pointer;border:0;background:none;
-    font:inherit;padding:20px 24px;color:var(--green-txt);font-weight:600;font-size:15.5px;text-align:left;
+    font:inherit;padding:16px 22px;color:var(--green-txt);font-weight:600;font-size:15px;text-align:left;
   }
   .presente-cab > svg:first-child{width:23px;height:23px;flex:none;stroke:var(--green-deep);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
   .presente-cab span{flex:1}
   .presente-seta{width:21px;height:21px;flex:none;stroke:var(--green-deep);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .24s ease}
   .presente-cab[aria-expanded="true"] .presente-seta{transform:rotate(180deg)}
-  .presente-corpo{padding:0 24px 24px;text-align:center;animation:entra .32s cubic-bezier(.2,.7,.3,1)}
-  .presente-corpo strong{display:block;font-size:clamp(28px,4vw,38px);font-weight:800;color:var(--green-txt);letter-spacing:-.035em;line-height:1.1}
-  .presente-corpo p{font-size:15px;color:var(--green-txt);margin:10px auto 0;max-width:44ch;opacity:.9}
+  .presente-corpo{padding:0 22px 19px;text-align:center;animation:entra .32s cubic-bezier(.2,.7,.3,1)}
+  .presente-corpo strong{display:block;font-size:clamp(19px,2.1vw,23px);font-weight:800;color:var(--green-txt);letter-spacing:-.03em;line-height:1.15}
+  .presente-corpo p{font-size:13.5px;line-height:1.5;color:var(--green-txt);margin:7px auto 0;max-width:44ch;opacity:.9}
 
   @media(max-width:520px){
     .val-l{flex-wrap:wrap;gap:4px 10px}
@@ -601,7 +642,7 @@
 
     document.getElementById("ac-cartao").innerHTML =
       '<p><b>12x sem juros.</b> A taxa do cartão fica comigo.</p>' +
-      tabela(lista.map(function(p){ return [p.nome, "12x " + reais(p.parcela), "total " + reais(p.parcela*12)]; }));
+      tabela(lista.map(function(p){ return [p.nome, "12x " + reais(p.parcela)]; }));
 
     document.getElementById("ac-avista").innerHTML =
       '<p><b>10% de desconto</b> no valor total, pagando no Pix ou no cartão.</p>' +
