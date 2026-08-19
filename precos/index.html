@@ -196,7 +196,23 @@
     font-style:normal;background:var(--mint);color:var(--green-txt);border-radius:999px;
     padding:5px 12px;font-size:12.5px;font-weight:700;min-width:0;text-align:center;white-space:nowrap;
   }
-  .nota-teste{text-align:center;font-size:14px;color:var(--slate-soft);max-width:46ch;margin:26px auto 0}
+  /* o presente: carta na manga que ele abre quando quiser */
+  .presente{max-width:min(600px,94%);margin:44px auto 0;border-radius:20px;overflow:hidden;
+    border:1px dashed #BFE3CD;background:var(--card-2);transition:border-color .22s ease,background .22s ease,box-shadow .22s ease}
+  .presente:has(.presente-cab[aria-expanded="true"]){
+    border-style:solid;border-color:transparent;background:linear-gradient(160deg,var(--mint) 0%,#D8F2E2 100%);
+    box-shadow:0 4px 12px rgba(10,127,57,.12),0 20px 44px rgba(10,127,57,.14)}
+  .presente-cab{
+    width:100%;display:flex;align-items:center;gap:13px;cursor:pointer;border:0;background:none;
+    font:inherit;padding:20px 24px;color:var(--green-txt);font-weight:600;font-size:15.5px;text-align:left;
+  }
+  .presente-cab > svg:first-child{width:23px;height:23px;flex:none;stroke:var(--green-deep);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .presente-cab span{flex:1}
+  .presente-seta{width:21px;height:21px;flex:none;stroke:var(--green-deep);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .24s ease}
+  .presente-cab[aria-expanded="true"] .presente-seta{transform:rotate(180deg)}
+  .presente-corpo{padding:0 24px 24px;text-align:center;animation:entra .32s cubic-bezier(.2,.7,.3,1)}
+  .presente-corpo strong{display:block;font-size:clamp(28px,4vw,38px);font-weight:800;color:var(--green-txt);letter-spacing:-.035em;line-height:1.1}
+  .presente-corpo p{font-size:15px;color:var(--green-txt);margin:10px auto 0;max-width:44ch;opacity:.9}
 
   @media(max-width:520px){
     .val-l{flex-wrap:wrap;gap:4px 10px}
@@ -418,12 +434,11 @@
   <section class="painel" id="p-pag" role="tabpanel" aria-labelledby="t-pag" hidden>
     <div class="titulo-secao">
       <span class="olho">Sem letra miúda</span>
-      <h2 class="tese">Todo negócio grande já foi um dono que decidiu se organizar.</h2>
+      <h2 class="tese">Todo negócio grande, um dia já foi um negócio em que o dono decidiu se organizar.</h2>
       <figure class="citacao">
         <blockquote>O sistema toca o negócio. As pessoas tocam o sistema.</blockquote>
         <figcaption>Michael Gerber, <i>O Mito do Empreendedor</i></figcaption>
       </figure>
-      <p>Aqui isso aparece todo dia: no tempo que sobra, no cliente bem atendido e no negócio pronto pra crescer.</p>
     </div>
 
     <div class="acordeao">
@@ -455,7 +470,17 @@
       </div>
     </div>
 
-    <p class="nota-teste">Tem teste de 14 dias grátis, combinado na conversa depois que eu entender o seu negócio.</p>
+    <div class="presente" id="presente">
+      <button class="presente-cab" type="button" aria-expanded="false" aria-controls="presente-corpo">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v9H4v-9"/><path d="M2 7.5h20V12H2z"/><path d="M12 21.5V7.5"/><path d="M12 7.5H7.6a2.55 2.55 0 0 1 0-5.1C11 2.4 12 7.5 12 7.5z"/><path d="M12 7.5h4.4a2.55 2.55 0 0 0 0-5.1C13 2.4 12 7.5 12 7.5z"/></svg>
+        <span>Tem mais uma coisa pra você</span>
+        <svg class="presente-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="presente-corpo" id="presente-corpo" hidden>
+        <strong>14 dias grátis</strong>
+        <p>A Aly entra no ar com os seus serviços e os seus horários, e você acompanha pelo painel. Se não servir pro seu negócio, você não paga nada.</p>
+      </div>
+    </div>
   </section>
 
   <div class="divisor" aria-hidden="true"><i></i></div>
@@ -554,6 +579,18 @@
       '<p><b>Sinal de ' + reais(SINAL) + '</b> pela implantação e o resto em parcelas fixas, com nota promissória assinada.</p>' +
       tabela(lista.map(function(p){ return [p.nome, "12x " + reais(p.parcela - SINAL/12), "depois do sinal"]; }));
   }
+
+  /* ── o presente, aberto por ele na hora certa ── */
+  (function(){
+    var cab = document.querySelector(".presente-cab");
+    if (!cab) return;
+    cab.addEventListener("click", function(){
+      var abrindo = cab.getAttribute("aria-expanded") !== "true";
+      cab.setAttribute("aria-expanded", String(abrindo));
+      document.getElementById("presente-corpo").hidden = !abrindo;
+      cab.querySelector("span").textContent = abrindo ? "Presente pra quem decide agora" : "Tem mais uma coisa pra você";
+    });
+  })();
 
   /* ── sanfona do pagamento: uma aberta por vez ── */
   var acs = document.querySelectorAll("[data-ac]");
