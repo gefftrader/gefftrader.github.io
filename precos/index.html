@@ -172,27 +172,18 @@
 
   /* ── sanfona: nada aparece ate ele tocar. E ele quem conduz. ── */
   .dica{text-align:center;font-size:13.5px;color:var(--slate-soft);margin-bottom:16px}
-  .planos-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
-  .planos-chips button{
-    font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;
-    background:var(--card);border:1px solid var(--line);border-radius:999px;
-    padding:9px 17px;color:var(--slate);box-shadow:var(--sombra);
-    transition:background .16s ease,color .16s ease,border-color .16s ease;
+  /* valores de todos os planos do produto, dentro da forma de pagamento */
+  .val-tabela{display:flex;flex-direction:column;margin-top:14px;border-top:1px solid var(--line)}
+  .val-l{display:flex;align-items:baseline;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .val-l:last-child{border-bottom:0;padding-bottom:0}
+  .val-l span{font-size:14.5px;color:var(--slate)}
+  .val-l b{margin-left:auto;font-size:17px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .val-l em{font-style:normal;font-size:12.5px;color:var(--slate-soft);white-space:nowrap;min-width:98px;text-align:right}
+  @media(max-width:520px){
+    .val-l{flex-wrap:wrap;gap:4px 10px}
+    .val-l b{margin-left:auto}
+    .val-l em{width:100%;text-align:left;min-width:0}
   }
-  .planos-chips button:hover{border-color:var(--slate-soft)}
-  .planos-chips button[aria-pressed="true"]{background:var(--green-deep);border-color:var(--green-deep);color:#fff;font-weight:700}
-  .plano-ativo{text-align:center;font-size:13.5px;color:var(--slate-soft);margin-bottom:18px}
-  .plano-ativo b{color:var(--ink);font-weight:600}
-
-  /* numeros dentro da sanfona */
-  .val-linha{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
-  .val-forte{font-size:clamp(24px,3.2vw,30px);font-weight:800;color:var(--ink);letter-spacing:-.035em;font-variant-numeric:tabular-nums;line-height:1.15}
-  .val-obs{font-size:14px;color:var(--slate-soft)}
-  .val-eco{
-    display:inline-block;background:var(--mint);color:var(--green-txt);
-    border-radius:999px;padding:5px 13px;font-size:13.5px;font-weight:700;margin-top:4px;
-  }
-  .val-nota{font-size:14.5px;margin-top:10px}
 
   .acordeao{display:flex;flex-direction:column;gap:12px;max-width:680px;margin:0 auto}
   .ac-item{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--sombra);overflow:hidden;transition:box-shadow .2s ease}
@@ -416,13 +407,10 @@
       <p>Essa decisão aparece todo dia: no tempo que sobra, no cliente bem atendido e no negócio pronto pra crescer.</p>
     </div>
 
-    <div class="planos-chips" id="planos-chips" role="group" aria-label="Escolha o plano"></div>
-    <p class="plano-ativo" id="plano-ativo"></p>
-
     <div class="acordeao">
       <div class="ac-item">
         <button class="ac-cab" type="button" aria-expanded="false" aria-controls="ac-cartao" data-ac="cartao">
-          <span class="ac-nome">No cartão</span>
+          <span class="ac-nome">Cartão</span>
           <span class="ac-resumo">12x sem juros</span>
           <svg class="ac-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
@@ -485,7 +473,7 @@
       painel.classList.toggle("on", alvo);
       painel.hidden = !alvo;
     });
-    if (PLANOS[id]) { produtoAtual = id; planoAtual = 0; pintarPagamento(); }
+    if (PLANOS[id]) { produtoAtual = id; pintarPagamento(); }
     if (history.replaceState) history.replaceState(null, "", "#" + id);
     if (focar) window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -502,56 +490,45 @@
   var SINAL = 1500;
   var PLANOS = {
     aly: [
-      { id:"uma",  nome:"Uma Cadeira",   quem:"1 profissional",       parcela:397, avista:4280 },
-      { id:"duas", nome:"Duas Cadeiras", quem:"2 profissionais",      parcela:597, avista:6440 },
-      { id:"casa", nome:"Casa Cheia",    quem:"3 a 5 profissionais",  parcela:747, avista:8060 }
+      { nome:"Uma Cadeira",   parcela:397, avista:4280 },
+      { nome:"Duas Cadeiras", parcela:597, avista:6440 },
+      { nome:"Casa Cheia",    parcela:747, avista:8060 }
     ],
     sob: [
-      { id:"sob",    nome:"Sistema",              quem:"sob medida",            parcela:300, avista:3240 },
-      { id:"sobsec", nome:"Sistema + secretária", quem:"você fala, ela lança",  parcela:400, avista:4320 }
+      { nome:"Sistema",              parcela:300, avista:3240 },
+      { nome:"Sistema + secretária", parcela:400, avista:4320 }
     ],
     lan: [
-      { id:"lan1", nome:"Até 300 pedidos",   quem:"no mês", parcela:500, avista:5400 },
-      { id:"lan2", nome:"301 a 600 pedidos", quem:"no mês", parcela:700, avista:7560 }
+      { nome:"Até 300 pedidos",   parcela:500, avista:5400 },
+      { nome:"301 a 600 pedidos", parcela:700, avista:7560 }
     ]
   };
-  var ROTULO = { aly:"Aly, atendente", sob:"Sistema sob medida", lan:"Atendente de lanchonete" };
-  var produtoAtual = "aly", planoAtual = 0;
+  var produtoAtual = "aly";
 
-  function reais(v){
-    return "R$ " + v.toLocaleString("pt-BR", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  function reais(v){ return "R$ " + v.toLocaleString("pt-BR"); }
+  function tabela(linhas){
+    return '<div class="val-tabela">' + linhas.map(function(l){
+      return '<div class="val-l"><span>' + l[0] + '</span><b>' + l[1] + '</b>' +
+             (l[2] ? '<em>' + l[2] + '</em>' : '') + '</div>';
+    }).join("") + '</div>';
   }
+
+  /* O sinal de R$ 1.500 divide exato por 12 (R$ 125), entao a parcela do
+     Direto comigo e sempre a parcela normal menos 125. */
   function pintarPagamento(){
     var lista = PLANOS[produtoAtual];
-    if (planoAtual >= lista.length) planoAtual = 0;
-    var pl = lista[planoAtual];
-    var total = pl.parcela * 12;
-    var economia = total - pl.avista;
-    var parcelaDireto = pl.parcela - SINAL / 12;
-
-    document.getElementById("planos-chips").innerHTML = lista.map(function(x, i){
-      return '<button type="button" data-plano="' + i + '" aria-pressed="' + (i === planoAtual) + '">' + x.nome + "</button>";
-    }).join("");
-    document.getElementById("plano-ativo").innerHTML =
-      ROTULO[produtoAtual] + " · <b>" + pl.nome + "</b>, " + pl.quem;
 
     document.getElementById("ac-cartao").innerHTML =
-      '<div class="val-linha"><span class="val-forte">12x ' + reais(pl.parcela) + '</span><span class="val-obs">sem juros</span></div>' +
-      '<p class="val-nota">Total de ' + reais(total) + '. A taxa do cartão fica comigo, você paga a parcela cheia sem acréscimo.</p>';
+      '<p><b>12x sem juros.</b> A taxa do cartão fica comigo.</p>' +
+      tabela(lista.map(function(p){ return [p.nome, "12x " + reais(p.parcela), "total " + reais(p.parcela*12)]; }));
 
     document.getElementById("ac-avista").innerHTML =
-      '<div class="val-linha"><span class="val-forte">' + reais(pl.avista) + '</span><span class="val-obs">no Pix ou no cartão</span></div>' +
-      '<span class="val-eco">Você economiza ' + reais(economia) + '</span>' +
-      '<p class="val-nota">10% de desconto sobre o total de ' + reais(total) + '.</p>';
+      '<p><b>10% de desconto</b> no valor total, pagando no Pix ou no cartão.</p>' +
+      tabela(lista.map(function(p){ return [p.nome, reais(p.avista), "economiza " + reais(p.parcela*12 - p.avista)]; }));
 
     document.getElementById("ac-direto").innerHTML =
-      '<div class="val-linha"><span class="val-forte">' + reais(SINAL) + '</span><span class="val-obs">de sinal, pela implantação</span></div>' +
-      '<div class="val-linha"><span class="val-forte">12x ' + reais(parcelaDireto) + '</span><span class="val-obs">nas parcelas seguintes</span></div>' +
-      '<p class="val-nota">Você assina uma nota promissória no valor do saldo e paga em 12 parcelas fixas, sem passar no cartão.</p>';
-
-    document.querySelectorAll("[data-plano]").forEach(function(b){
-      b.addEventListener("click", function(){ planoAtual = Number(b.dataset.plano); pintarPagamento(); });
-    });
+      '<p><b>Sinal de ' + reais(SINAL) + '</b> pela implantação e o resto em parcelas fixas, com nota promissória assinada.</p>' +
+      tabela(lista.map(function(p){ return [p.nome, "12x " + reais(p.parcela - SINAL/12), "depois do sinal"]; }));
   }
 
   /* ── sanfona do pagamento: uma aberta por vez ── */
