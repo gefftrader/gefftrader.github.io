@@ -622,23 +622,24 @@
   abas.forEach(function(b){
     b.addEventListener("click", function(){ abrir(b.dataset.aba, true); });
   });
-  /* ── planos por produto, com o calculo de cada forma de pagamento ──
-     O sinal de R$ 1.500 divide exato por 12 (R$ 125), entao a parcela do
-     "Direto comigo" e sempre a parcela normal menos 125. ── */
+  /* ── planos por produto, com o valor de cada forma de pagamento ──
+     "direto" e a parcela da nota promissoria. Ela nao sai de conta em cima
+     do cartao: e tabela propria, redonda, e custa um pouco mais porque nela
+     quem financia os 12 meses e ele, nao o banco. ── */
   var SINAL = 1500;
   var PLANOS = {
     aly: [
-      { nome:"Uma Cadeira",   parcela:397, avista:4280 },
-      { nome:"Duas Cadeiras", parcela:597, avista:6440 },
-      { nome:"Casa Cheia",    parcela:747, avista:8060 }
+      { nome:"Uma Cadeira",   parcela:397, avista:4280, direto:300 },
+      { nome:"Duas Cadeiras", parcela:597, avista:6440, direto:500 },
+      { nome:"Casa Cheia",    parcela:747, avista:8060, direto:650 }
     ],
     sob: [
-      { nome:"Sistema",              parcela:300, avista:3240 },
-      { nome:"Sistema + secretária", parcela:400, avista:4320 }
+      { nome:"Sistema",              parcela:300, avista:3240, direto:200 },
+      { nome:"Sistema + secretária", parcela:400, avista:4320, direto:300 }
     ],
     lan: [
-      { nome:"Até 300 pedidos",   parcela:500, avista:5400 },
-      { nome:"301 a 600 pedidos", parcela:700, avista:7560 }
+      { nome:"Até 300 pedidos",   parcela:500, avista:5400, direto:400 },
+      { nome:"301 a 600 pedidos", parcela:700, avista:7560, direto:600 }
     ]
   };
   var produtoAtual = "aly";
@@ -651,8 +652,6 @@
     }).join("") + '</div>';
   }
 
-  /* O sinal de R$ 1.500 divide exato por 12 (R$ 125), entao a parcela do
-     Direto comigo e sempre a parcela normal menos 125. */
   function pintarPagamento(){
     var lista = PLANOS[produtoAtual];
 
@@ -674,7 +673,7 @@
 
     document.getElementById("ac-direto").innerHTML =
       '<p><b>Sinal de ' + reais(SINAL) + '</b> pela implantação e o resto em parcelas fixas, com nota promissória assinada.</p>' +
-      tabela(lista.map(function(p){ return [p.nome, "12x " + reais(p.parcela - SINAL/12), "depois do sinal"]; }));
+      tabela(lista.map(function(p){ return [p.nome, "12x " + reais(p.direto), "depois do sinal"]; }));
   }
 
   /* ── o selo e o gatilho do presente. Um toque e ele entra na tela com
