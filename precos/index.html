@@ -616,7 +616,6 @@
       painel.hidden = !alvo;
     });
     if (PLANOS[id]) { produtoAtual = id; pintarPagamento(); }
-    if (history.replaceState) history.replaceState(null, "", "#" + id);
     if (focar) window.scrollTo({ top: 0, behavior: "smooth" });
   }
   abas.forEach(function(b){
@@ -755,10 +754,14 @@
   pintar();
   pintarPagamento();
 
-  /* Abre direto na aba do link compartilhado. Fica no fim de proposito:
-     precisa dos precos ja carregados pra nao quebrar em /precos#pag. */
+  /* O link e sempre /precos, limpo. Link antigo com #aba ainda abre na aba
+     certa, e ai a barra de endereco e limpa. Fica no fim de proposito:
+     precisa dos precos ja carregados pra nao quebrar. */
   var inicial = (location.hash || "").replace("#","");
   if (inicial && document.getElementById("p-" + inicial)) abrir(inicial, false);
+  if (location.hash && history.replaceState) {
+    history.replaceState(null, "", location.pathname + location.search);
+  }
 </script>
 </body>
 </html>
